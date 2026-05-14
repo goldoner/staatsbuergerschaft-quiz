@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staatsbürgerschaftsprüfung Übungstest – Alle Bundesländer Österreich</title>
+<meta name="description" content="Kostenloser Übungstest für die Staatsbürgerschaftsprüfung in Österreich. Alle 9 Bundesländer, realistische Prüfungssimulation mit offiziellen Bestehensbedingungen, Fehlerspeicher und Testergebnisse.">
+<meta name="keywords" content="Staatsbürgerschaft Prüfung, Österreich Test, Staatsbürgerschaftsprüfung Wien, Übungstest Staatsbürgerschaft, Staatsbürgerschaft Niederösterreich, Staatsbürgerschaft Steiermark, Staatsbürgerschaft Tirol, Prüfungssimulation Österreich">
+<meta name="author" content="Aleksandr Grek">
+<meta property="og:title" content="Staatsbürgerschaftsprüfung Übungstest – Alle Bundesländer">
+<meta property="og:description" content="Kostenloser interaktiver Übungstest für die österreichische Staatsbürgerschaftsprüfung. Alle Bundesländer, Prüfungssimulation, Fehlerspeicher.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f12;
+  --card: #1a1a22;
+  --card-hover: #22222e;
+  --border: #2a2a38;
+  --text: #e8e6f0;
+  --text-dim: #8b8898;
+  --accent: #c2372e;
+  --accent-glow: #e04038;
+  --correct: #2d9a5a;
+  --correct-bg: rgba(45,154,90,0.12);
+  --wrong: #c2372e;
+  --wrong-bg: rgba(194,55,46,0.12);
+  --gold: #d4a843;
+  --wien: #c2372e;
+  --geschichte: #6b5ce7;
+  --demokratie: #2889d4;
+  --bundesland: #2a9d6b;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+.noise {
+  position: fixed; inset:0; z-index:0; pointer-events:none; opacity:0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.app { position:relative; z-index:1; max-width:800px; margin:0 auto; padding:20px; }
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.8rem,4vw,2.6rem);
+  text-align:center;
+  margin: 30px 0 8px;
+  background: linear-gradient(135deg, var(--accent-glow), var(--gold));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.subtitle { text-align:center; color:var(--text-dim); font-size:0.95rem; margin-bottom:30px; }
+.subtitle a { color: var(--gold); text-decoration:none; }
+
+/* Category Cards */
+.categories {
+  display:grid; gap:16px; margin-bottom:30px;
+}
+.cat-card {
+  background: var(--card);
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  cursor:pointer;
+  transition: all 0.3s;
+  display:flex; align-items:center; gap:16px;
+}
+.cat-card:hover { background:var(--card-hover); transform:translateY(-2px); box-shadow:var(--shadow); }
+.cat-card.active { border-color: var(--gold); }
+.cat-icon {
+  width:48px; height:48px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem; flex-shrink:0;
+}
+.cat-icon.wien { background: rgba(194,55,46,0.15); }
+.cat-icon.geschichte { background: rgba(107,92,231,0.15); }
+.cat-icon.demokratie { background: rgba(40,137,212,0.15); }
+.cat-info h3 { font-size:1.1rem; font-weight:600; }
+.cat-info p { font-size:0.85rem; color:var(--text-dim); }
+.cat-badge {
+  margin-left:auto; padding:4px 12px; border-radius:20px;
+  font-size:0.8rem; font-weight:600;
+}
+.cat-badge.wien { background:rgba(194,55,46,0.15); color:var(--wien); }
+.cat-badge.geschichte { background:rgba(107,92,231,0.15); color:var(--geschichte); }
+.cat-badge.demokratie { background:rgba(40,137,212,0.15); color:var(--demokratie); }
+.cat-badge.bundesland { background:rgba(42,157,107,0.15); color:var(--bundesland); }
+.cat-icon.bundesland { background:rgba(42,157,107,0.15); }
+.q-category.bundesland { background:rgba(42,157,107,0.12); color:var(--bundesland); }
+
+/* Mode Buttons */
+.modes { display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap; }
+.mode-btn {
+  flex:1; min-width:140px; padding:12px 16px;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); color:var(--text);
+  font-family:inherit; font-size:0.9rem; font-weight:500;
+  cursor:pointer; transition:all 0.2s; text-align:center;
+}
+.mode-btn:hover { background:var(--card-hover); }
+.mode-btn.active { border-color:var(--gold); background:rgba(212,168,67,0.08); color:var(--gold); }
+
+/* Progress */
+.progress-bar {
+  width:100%; height:6px; background:var(--border);
+  border-radius:3px; margin-bottom:20px; overflow:hidden;
+}
+.progress-fill {
+  height:100%; border-radius:3px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  transition: width 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+.progress-text {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:10px; font-size:0.85rem; color:var(--text-dim);
+}
+
+/* Question Card */
+.question-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:28px; margin-bottom:20px;
+  animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.q-category {
+  font-size:0.75rem; font-weight:600; text-transform:uppercase;
+  letter-spacing:1px; margin-bottom:12px; display:inline-block;
+  padding:3px 10px; border-radius:6px;
+}
+.q-category.wien { background:rgba(194,55,46,0.12); color:var(--wien); }
+.q-category.geschichte { background:rgba(107,92,231,0.12); color:var(--geschichte); }
+.q-category.demokratie { background:rgba(40,137,212,0.12); color:var(--demokratie); }
+.q-multi-hint {
+  font-size:0.78rem; color:var(--gold); margin-bottom:14px;
+  font-style:italic;
+}
+.q-text {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.1rem,2.5vw,1.35rem);
+  line-height:1.5; margin-bottom:24px;
+}
+
+/* Options */
+.options { display:flex; flex-direction:column; gap:10px; }
+.option {
+  padding:14px 18px; background:rgba(255,255,255,0.03);
+  border:1px solid var(--border); border-radius:10px;
+  cursor:pointer; transition:all 0.2s; font-size:0.95rem;
+  display:flex; align-items:flex-start; gap:12px;
+  user-select:none;
+}
+.option:hover:not(.disabled) { background:rgba(255,255,255,0.06); border-color:#444; }
+.option.selected { border-color:var(--gold); background:rgba(212,168,67,0.06); }
+.option.correct { border-color:var(--correct); background:var(--correct-bg); }
+.option.wrong { border-color:var(--wrong); background:var(--wrong-bg); }
+.option.disabled { cursor:default; opacity:0.7; }
+.option.correct-missed { border-color:var(--correct); border-style:dashed; background:var(--correct-bg); opacity:0.7; }
+.option .check {
+  width:22px; height:22px; border-radius:6px; border:2px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; font-size:0.8rem; transition:all 0.2s; margin-top:1px;
+}
+.option.selected .check { border-color:var(--gold); background:rgba(212,168,67,0.2); }
+.option.selected .check::after { content:'✓'; color:var(--gold); }
+.option.correct .check { border-color:var(--correct); background:rgba(45,154,90,0.3); }
+.option.correct .check::after { content:'✓'; color:#4ade80; }
+.option.wrong .check { border-color:var(--wrong); background:rgba(194,55,46,0.3); }
+.option.wrong .check::after { content:'✗'; color:#f87171; }
+.option.correct-missed .check { border-color:var(--correct); border-style:dashed; }
+.option.correct-missed .check::after { content:'✓'; color:var(--correct); opacity:0.6; }
+
+/* Buttons */
+.btn-row { display:flex; gap:12px; margin-top:20px; flex-wrap:wrap; }
+.btn {
+  padding:12px 28px; border-radius:10px; border:none;
+  font-family:inherit; font-size:0.95rem; font-weight:600;
+  cursor:pointer; transition:all 0.2s;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+  color:#fff;
+}
+.btn-primary:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(194,55,46,0.3); }
+.btn-primary:disabled { opacity:0.4; cursor:not-allowed; transform:none; box-shadow:none; }
+.btn-secondary {
+  background:var(--card); border:1px solid var(--border); color:var(--text);
+}
+.btn-secondary:hover { background:var(--card-hover); }
+
+/* Results */
+.results-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:40px; text-align:center;
+  animation: fadeIn 0.5s ease;
+}
+.score-circle {
+  width:140px; height:140px; border-radius:50%; margin:0 auto 24px;
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  position:relative;
+}
+.score-circle svg { position:absolute; inset:0; }
+.score-num { font-family:'DM Serif Display',serif; font-size:2.4rem; z-index:1; }
+.score-label { font-size:0.8rem; color:var(--text-dim); z-index:1; }
+.results-title {
+  font-family:'DM Serif Display',serif; font-size:1.6rem; margin-bottom:8px;
+}
+.results-sub { color:var(--text-dim); margin-bottom:24px; }
+.stats-row { display:flex; justify-content:center; gap:32px; margin-bottom:28px; flex-wrap:wrap; }
+.stat { text-align:center; }
+.stat-num { font-size:1.6rem; font-weight:700; }
+.stat-num.green { color:var(--correct); }
+.stat-num.red { color:var(--wrong); }
+.stat-label { font-size:0.8rem; color:var(--text-dim); }
+
+/* Review Section */
+.review-item {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:20px; margin-bottom:12px;
+  text-align:left;
+}
+.review-q { font-weight:600; margin-bottom:10px; font-size:0.95rem; }
+.review-answer { font-size:0.88rem; padding:4px 0; }
+.review-answer.correct-ans { color:var(--correct); }
+.review-answer.wrong-ans { color:var(--wrong); text-decoration:line-through; }
+.review-answer.missed-ans { color:var(--gold); font-style:italic; }
+
+/* Footer */
+.site-footer {
+  margin-top: 60px;
+  padding: 32px 20px 40px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.kaiserschmarrn-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid rgba(212,168,67,0.25);
+  border-radius: var(--radius);
+  padding: 24px 32px;
+  max-width: 380px;
+  width: 100%;
+}
+.kaiserschmarrn-emoji {
+  font-size: 2.8rem;
+  line-height: 1;
+}
+.kaiserschmarrn-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.25rem;
+  background: linear-gradient(135deg, var(--gold), #f0c060);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.kaiserschmarrn-sub {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.footer-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.footer-link.paypal {
+  background: rgba(0,112,240,0.12);
+  border: 1px solid rgba(0,112,240,0.3);
+  color: #4a9eff;
+}
+.footer-link.paypal:hover { background: rgba(0,112,240,0.2); transform: translateY(-1px); }
+.footer-link.linkedin {
+  background: rgba(10,102,194,0.12);
+  border: 1px solid rgba(10,102,194,0.3);
+  color: #5ba4f5;
+}
+.footer-link.linkedin:hover { background: rgba(10,102,194,0.2); transform: translateY(-1px); }
+.footer-credits {
+  margin-top: 20px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+/* Responsive */
+@media(max-width:600px) {
+  .app { padding:12px; }
+  .question-card { padding:20px; }
+  .results-card { padding:24px; }
+  .stats-row { gap:20px; }
+}
+
+/* Exam banner */
+.exam-banner {
+  background: linear-gradient(135deg, rgba(194,55,46,0.12), rgba(212,168,67,0.08));
+  border: 1px solid rgba(212,168,67,0.3);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.exam-banner:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--gold); }
+.exam-banner-icon { font-size: 2rem; }
+.exam-banner-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 2px; }
+.exam-banner-sub { font-size: 0.82rem; color: var(--text-dim); }
+.exam-banner-arrow { margin-left: auto; color: var(--gold); font-size: 1.2rem; flex-shrink: 0; }
+
+/* Wrong bank card */
+.wrong-bank-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 20px;
+  cursor: pointer; margin-top: 16px; transition: all 0.2s;
+}
+.wrong-bank-card:hover { background: var(--card-hover); }
+
+/* Topic score bars */
+.topic-scores-section { margin: 16px 0 20px; }
+.topic-score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.topic-score-bar-wrap { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.topic-score-bar { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+
+/* History */
+.hist-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 20px;
+  margin-bottom: 10px; cursor: pointer; transition: all 0.2s;
+}
+.hist-item:hover { background: var(--card-hover); }
+.hist-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+.hist-badge.pass { background: rgba(45,154,90,0.15); color: var(--correct); }
+.hist-badge.fail { background: rgba(194,55,46,0.15); color: var(--wrong); }
+
+/* Answer status feedback */
+.answer-status {
+  margin-top: 14px; padding: 8px 14px; border-radius: 8px;
+  font-size: 0.88rem; font-weight: 500;
+}
+.correct-status { background: var(--correct-bg); color: #4ade80; border: 1px solid var(--correct); }
+.partial-status { background: rgba(212,168,67,0.1); color: var(--gold); border: 1px solid rgba(212,168,67,0.4); }
+.wrong-status { background: var(--wrong-bg); color: #f87171; border: 1px solid var(--wrong); }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div class="app" id="app"></div>
+
+<script>
+// ============================================================
+// QUESTION DATA - All questions from staatsbuergerschaft.com
+// ============================================================
+const ALL_QUESTIONS = [
+// ---- WIEN Teil 1 ----
+{cat:"Wien",q:"In welchem historisch bedeutsamen Gebäude Wiens wurde 1955 der Staatsvertrag unterzeichnet?",opts:["im Schloss Belvedere","in der Hofburg","im Schloss Essling","im Schloss Schönbrunn"],ans:[0]},
+{cat:"Wien",q:"Wie heißt die größte Glocke des Stephansdoms, die immer an Silvester geläutet wird?",opts:["Pummerin","Ratsglocke","Steffl","Stephani"],ans:[0]},
+{cat:"Wien",q:"Welcher Brunnen erinnert noch heute an die Eröffnung der 1. Hochquellenwasserleitung?",opts:["der schöne Brunnen in Schönbrunn","Austriabrunnen","Donnerbrunnen","Hochstrahlbrunnen"],ans:[3]},
+{cat:"Wien",q:"Was befindet sich zwischen dem Naturhistorischen und dem Kunsthistorischen Museum?",opts:["Ein Denkmal Maria Theresias","Die Staatsoper","Ein Denkmal von Joseph II","Die UNO-City"],ans:[0]},
+{cat:"Wien",q:"1945–1955: Von welcher der 4 alliierten Mächte wurde der erste Wiener Bezirk verwaltet?",opts:["von den Amerikanern","von den Russen","von allen 4 Alliierten gemeinsam","von den Italienern"],ans:[2]},
+{cat:"Wien",q:"Wie heißt das heute noch bestehende Krankenhaus in Wien, das 1784 gegründet wurde und in dem auch arme Personen behandelt wurden?",opts:["Otto-Wagner-Spital","Evangelisches Krankenhaus Wien Währing","Allgemeines Krankenhaus","Donauspital"],ans:[2]},
+{cat:"Wien",q:"In welchem Bezirk steht der Stephansdom?",opts:["im 5. Bezirk","im 22. Bezirk","im 1. Bezirk","im 12. Bezirk"],ans:[2]},
+{cat:"Wien",q:"Was befindet sich heute im Schloss Belvedere?",opts:["ein Fitnessstudio","ein typisches Wiener Kaffeehaus","ein Wiener Tanzsalon","eine Galerie mit vielen Gemälden"],ans:[3]},
+{cat:"Wien",q:"In welchem Bezirk befindet sich das Schloss Belvedere?",opts:["im 11. Bezirk (Simmering)","im 21. Bezirk (Floridsdorf)","im 15. Bezirk (Rudolfsheim-Fünfhaus)","im 3. Bezirk (Landstraße)"],ans:[3]},
+{cat:"Wien",q:"Wie wird Wien mit Wasser versorgt?",opts:["mit gefiltertem und aufbereitetem Donauwasser","über Aquädukte","überwiegend mit Wasser aus Brunnen","über Hochquellenwasserleitungen"],ans:[3]},
+{cat:"Wien",q:"Welche Periode nennt man die Zeit des Ständestaates?",opts:["die heutige Zeit","die Zeit, in der die Habsburger herrschten","die Zeit, in der die christlichsoziale Partei autoritär regierte (1933–1938)","während des Kalten Krieges"],ans:[2]},
+{cat:"Wien",q:"Bis zu welcher Altersgrenze dürfen Schüler/innen in den Schulferien kostenlos die öffentlichen Verkehrsmittel in Wien benutzen?",opts:["bis zum 19. Lebensjahr","bis zum 10. Lebensjahr","bis zum 24. Lebensjahr","bis zum 4. Lebensjahr"],ans:[2]},
+{cat:"Wien",q:"Was hat die OSZE zum Ziel?",opts:["den Erhalt der kunsthistorischen Schätze","die Vergrößerung Wiens","die Verfolgung und Verhaftung von Terroristen","das Lösen von Konflikten"],ans:[3]},
+{cat:"Wien",q:"Wie heißt das Open-Air Fest, das jedes Jahr auf der Donauinsel gefeiert wird?",opts:["Donauinselfest","Mountain Festival","Osterfestival Wien","Metal Fields"],ans:[0]},
+{cat:"Wien",q:"Warum wurde die Donauinsel ursprünglich errichtet?",opts:["als Naturschutzgebiet","als Hochwasserschutz","zur Erholung der Wiener und Wienerinnen","für Touristen"],ans:[1]},
+// ---- WIEN Teil 2 ----
+{cat:"Wien",q:"Von wann bis wann lebte Erzherzogin Maria Theresia in Wien?",opts:["1990 bis heute","1717 bis 1780","1817 bis 1890","1777 bis 1798"],ans:[1]},
+{cat:"Wien",q:"Aus wie vielen Bezirken besteht Wien seit 1954?",opts:["35","12","23","46"],ans:[2]},
+{cat:"Wien",q:"Wie viele U-Bahn Linien gibt es in Wien?",opts:["3","2","5","1"],ans:[2]},
+{cat:"Wien",q:"Wie hieß das römische Militärlager, das im 1. Jahrhundert n. Chr. angelegt wurde?",opts:["Juvavum","Brigantia","Lentia","Vindobona"],ans:[3]},
+{cat:"Wien",q:"Wie viele Gemeindewohnungen gibt es im Moment in Wien?",opts:["keine","ca. 1 000 000","ca. 220 000","ca. 100 000"],ans:[2]},
+{cat:"Wien",q:"Auf Initiative welchen Bundeskanzlers wurde Wien 1979 UNO-Sitz?",opts:["Brigitte Bierlein","Dr. Bruno Kreisky","Karl Renner","Sebastian Kurz"],ans:[1]},
+{cat:"Wien",q:"In welchem Bezirk Wiens ist die UNO-City?",opts:["im Zentrum Wiens","im 22. Wiener Gemeindebezirk","im 2. Bezirk","im 18. Bezirk"],ans:[1]},
+{cat:"Wien",q:"Wofür steht die Abkürzung OSZE?",opts:["Organisation für Soziales und Zivilschutz im Ernstfall","Organisation für Sicherheit und Zusammenarbeit in Europa","Organisation für Statistik und Zufriedenheit in Europa","Organ für Sicherheit und Zentralverwaltung Europas"],ans:[1]},
+{cat:"Wien",q:'An was erinnert das Zeichen 05 am Wiener Stephansdom?',opts:["an eine Widerstandsgruppe gegen das NS-Regime","an das Jahr 2005","an das Gründungsjahr 1305","an die 4 alliierten Besatzungsmächte"],ans:[0]},
+{cat:"Wien",q:"Wer darf im Wiener Gemeinderat an den Sitzungen zuhören und zusehen?",opts:["nur ausländische Gemeinderäte","nur die 100 Gemeinderäte","nur der Bürgermeister","alle interessierten Personen"],ans:[3]},
+{cat:"Wien",q:"Welche Ämter übt der Bürgermeister in Wien aus?",opts:["Bundeskanzler/in und Bundespräsident/in","Landeshauptmann und Bundeskanzler/in","Bürgermeister/in und Landeshauptmann","Bürgermeister/in und Bundeskanzler/in"],ans:[2]},
+{cat:"Wien",q:"Was war das Besondere an den Gemeindewohnungen der Zwischenkriegszeit in Wien?",opts:["WC, Fernseher und Satellitenanlagen","es gab keine Besonderheiten","ein extra Kinderzimmer","Vorzimmer, fließendes Wasser und ein WC"],ans:[3]},
+{cat:"Wien",q:"Wie nennt man die Wohnungen, die von der Stadt Wien gebaut und von Wiener Wohnen vermietet werden?",opts:["Penthouses","Souterrainwohnungen","Eigentumswohnungen","Gemeindewohnungen"],ans:[3]},
+{cat:"Wien",q:'Woran erinnert die Einkaufsstraße Graben im 1. Bezirk?',opts:["an die Gräber österreichischer Kaiser","an die Grabungen der Kelten","an die Gräber slawischer Bauern","an den Befestigungsgraben des römischen Militärlagers"],ans:[3]},
+{cat:"Wien",q:"In welchem Gebäude wohnte Erzherzogin Maria Theresia im Sommer?",opts:["Schloss Kornberg","im Schloss Schönbrunn","im Grazer Landhaus","im Schloss Belvedere"],ans:[1]},
+// ---- WIEN Teil 3 ----
+{cat:"Wien",q:"Welche politische Funktion haben die Gemeinderäte Wiens gleichzeitig noch?",opts:["Sie sind gleichzeitig auch Kanzlerkandidaten","Abgeordnete der Innsbrucker Gemeinde","Abgeordnete zum Wiener Landtag","Es gibt keine zusätzliche Funktion"],ans:[2]},
+{cat:"Wien",q:"Wie nennt man den ersten Bezirk Wiens?",opts:["Innere Stadt, weil er der Kern Wiens ist","Liesing","Favoriten","Mariahilf"],ans:[0]},
+{cat:"Wien",q:"Welches politische Amt hat der Wiener Bürgermeister gleichzeitig noch?",opts:["Bundespräsident","Bundeskanzler","Landeshauptmann","Gemeinderatspräsident"],ans:[2]},
+{cat:"Wien",q:"An welchem Ort entstand das historische Wien?",opts:["südlich der Donau, an einem Kreuzungspunkt alter Verkehrswege","nördlich und südlich des Wiener Beckens","im Westen der Donau","nördlich der Donau"],ans:[0]},
+{cat:"Wien",q:"Wo befindet sich seit 1883 der Amtssitz des Wiener Bürgermeisters?",opts:["im Parlament","im Schloss Belvedere","in der Hofburg","im Wiener Rathaus"],ans:[3]},
+{cat:"Wien",q:"Wie viele Einwohner/innen gibt es in Wien derzeit?",opts:["ca. 1.474.000","ca. 2.000.000","ca. 1.671.000","ca. 2.283.000"],ans:[1]},
+{cat:"Wien",q:"Wo können Mütter in Notsituationen neugeborene Babys anonym abgeben?",opts:["im Neugeborenen-Nest in der Rudolfsstiftung","in der Kinderkrippe im AKH","im Babynest Glanzing im Wilhelminenspital","in Kindertagesstätten"],ans:[2]},
+{cat:"Wien",q:"Wie nennen die Wiener den Stephansdom noch?",opts:["Stephani","Pummerin","Reikl","Steffl"],ans:[3]},
+{cat:"Wien",q:"Was befindet sich in Schönbrunn?",opts:["ein großes Einkaufscenter","ein Vergnügungspark mit dem Riesenrad","den ältesten, noch bestehenden Tiergarten der Welt","das kleinste Theater Österreichs"],ans:[2]},
+{cat:"Wien",q:'Was meinen die Leute, wenn sie vom Roten Wien sprechen?',opts:["die Zeit nach dem Staatsvertrag","das Viertel mit roten Dächern","Soziale Reformen im sozialistischen Wien der Zwischenkriegszeit","Wien zur Zeit Maria Theresias"],ans:[2]},
+{cat:"Wien",q:"Was überreicht die MA 11 anlässlich der Geburt eines Babys in Wien den Eltern?",opts:["ein Wickeltisch","eine Windelpackung","Wiener Dokumentenmappe","Wickelrucksack mit einem Gutscheinheft"],ans:[3]},
+{cat:"Wien",q:"Nach welchem Fluss ist Wien benannt?",opts:["nach der Salzach","nach dem Wienfluss","nach dem Rhein","nach der Donau"],ans:[1]},
+{cat:"Wien",q:"Aus wie vielen Gemeinderäten besteht der Wiener Gemeinderat?",opts:["86","10","50","100"],ans:[3]},
+{cat:"Wien",q:"Woher haben die Gemeindewohnungen Wiens ihren Namen?",opts:["weil sie vom Staat gebaut wurden","weil sie von einer Bank gebaut wurden","weil sie von der Gemeinde Wien gebaut wurden","weil sie von einer Privatperson gebaut wurden"],ans:[2]},
+{cat:"Wien",q:"Welche Parteien sind derzeit im Wiener Gemeinderat vertreten?",opts:["SPÖ, ÖVP, Grüne, FPÖ","Grüne, KPÖ, SPÖ","SPÖ, Grüne, FPÖ, ÖVP und NEOS","SPÖ, Grüne, ÖVP"],ans:[2]},
+// ---- WIEN Teil 4 ----
+{cat:"Wien",q:"Welches Wahrzeichen befindet sich im Prater?",opts:["der Donauturm","die UNO-City","das Riesenrad","der Stephansdom"],ans:[2]},
+{cat:"Wien",q:"Über welches Gebiet erstreckte sich die Stadt Wien vor 1850?",opts:["über den 23. Bezirk (Liesing)","über den 10. Bezirk (Favoriten)","über den 1. Bezirk (Innere Stadt)","über den 2. Bezirk (Leopoldstadt)"],ans:[2]},
+{cat:"Wien",q:"Welche Bedeutung hat Wien für die UNO?",opts:["Die Friedenstruppen kommen regelmäßig nach Wien","In der UNO-City sind IAEA und UNIDO","Wien spielt keine Rolle für die UNO","Alle UNO-Konferenzen finden in Wien statt"],ans:[1]},
+{cat:"Wien",q:"Welche Bezirke befinden sich nördlich der Donau?",opts:["Floridsdorf","Donaustadt","Innere Stadt","Penzing"],ans:[0,1]},
+{cat:"Wien",q:"Woher kommt der Name des Schlosses Schönbrunn?",opts:["von Brunn am Gebirge","von dem Architekten Schönbrunn","weil dort ein schöner Brunnen stand","weil dort die Familie Schönbrunn wohnte"],ans:[2]},
+{cat:"Wien",q:"Welche war die erste offiziell eröffnete U-Bahn-Linie Wiens?",opts:["U6","U3","U1","U8"],ans:[2]},
+{cat:"Wien",q:"Wie viele Wohnungen wurden von 1920 bis 1934 von der Stadt Wien gebaut?",opts:["rund 15.000","rund 40.000","rund 65.000","rund 85.000"],ans:[2]},
+{cat:"Wien",q:'Wen nannte man die Vier im Jeep?',opts:["Die Bezeichnung gibt es nicht","Ein Amerikaner, ein Brite, ein Russe und ein Franzose als Militärpolizei","Ein Amerikaner, ein Brite, ein Russe und ein Holländer","Ein Amerikaner, ein Deutscher, ein Italiener und ein Franzose"],ans:[1]},
+{cat:"Wien",q:"Wann wurde zum ersten Mal das Stadtrecht von Wien in einer Urkunde festgelegt?",opts:["vor Christi Geburt","im 17. Jahrhundert (1681)","im 18. Jahrhundert (1768)","im 13. Jahrhundert (1221)"],ans:[3]},
+{cat:"Wien",q:"Welche internationalen Organisationen haben seit vielen Jahren ihren Sitz in Wien?",opts:["NATO","UNESCO","OSZE","UNO"],ans:[2,3]},
+{cat:"Wien",q:"Welche Teile Wiens gehören zum Weltkulturerbe?",opts:["die UNO-City","die Innere Stadt","die äußeren Bezirke","das Schloss Schönbrunn"],ans:[1,3]},
+{cat:"Wien",q:"Wie heißt der Teil des Praters, der ein Vergnügungspark ist?",opts:["Loepoldprater","Karussellpark Leopoldau","Wurstelprater","Volksprater"],ans:[2]},
+// ---- GESCHICHTE Teil 1 ----
+{cat:"Geschichte",q:"In welchem Jahr wurde das Kaiserreich Österreich gegründet?",opts:["1814","1839","1604","1804"],ans:[3]},
+{cat:"Geschichte",q:"Welche Folge hatte die Ermordung des Thronfolgers Franz Ferdinand in Sarajevo 1914?",opts:["Bürgerkrieg","Friedensgespräche","Erster Weltkrieg","Zweiter Weltkrieg"],ans:[2]},
+{cat:"Geschichte",q:"Wer war 1867 Kaiser von Österreich-Ungarn?",opts:["Franz Johannes","Johann","Franz II.","Franz Josef"],ans:[3]},
+{cat:"Geschichte",q:"Nennen Sie einen Sozialpartner?",opts:["Schulen","Banken","Gewerkschaften","Versicherungen"],ans:[2]},
+{cat:"Geschichte",q:"Wer waren die Sieger des Zweiten Weltkrieges?",opts:["Frankreich","Großbritannien","die USA","Deutschland"],ans:[0,1,2]},
+{cat:"Geschichte",q:"Wo ist der Hauptsitz der UNO?",opts:["Wien","New York","London","Brüssel"],ans:[1]},
+{cat:"Geschichte",q:"Welcher Fluss bildete in der Römerzeit die Grenze zum Römischen Reich?",opts:["Seine","Rhein","Donau","Inn"],ans:[2]},
+{cat:"Geschichte",q:"Welche Religionen waren 1918 in Österreich-Ungarn offiziell anerkannt?",opts:["Judentum","Konfuzianismus","Islam","Buddhismus"],ans:[0,2]},
+{cat:"Geschichte",q:"Wodurch endete die Römerzeit?",opts:["Einwanderung slowakischer Völker","Einführung der Schulpflicht","Einwanderung germanischer Völker und Eroberung der Gebiete","Errichtung von Verkehrsnetzen"],ans:[2]},
+{cat:"Geschichte",q:"Welche Länder gehörten im 1. Weltkrieg zum Bündnis mit Österreich?",opts:["Schweiz","Deutschland","Bulgarien","Türkei"],ans:[1,2,3]},
+{cat:"Geschichte",q:'Was versteht man unter dem Anschluss Österreichs am 12. März 1938?',opts:["Einmarsch deutscher Truppen","Einmarsch britischer Truppen","Einmarsch sowjetischer Truppen","Einmarsch italienischer Truppen"],ans:[0]},
+{cat:"Geschichte",q:"Welche Krisen folgten nach der Gründung der Republik Österreich?",opts:["Ernteausfall","Hohe Inflation","Hohe Arbeitslosigkeit","Umweltkatastrophe"],ans:[1,2]},
+{cat:"Geschichte",q:"Wann wurde das Wahlrecht für Frauen eingeführt?",opts:["1918","1900","1955","1867"],ans:[0]},
+{cat:"Geschichte",q:"Was wurde durch Maria Theresia geschaffen?",opts:["Abschaffung der Folter","Schulpflicht","einheitliche Verwaltung","Wahlrecht"],ans:[0,1,2]},
+{cat:"Geschichte",q:"Welche Aussagen zum 2. Weltkrieg stimmen?",opts:["Bis 1941 eroberte Deutschland große Teile Europas","Der 2. Weltkrieg begann mit dem Überfall auf Polen 1939","Die deutsche Armee hat den 2. Weltkrieg gewonnen","Die deutsche Armee wurde 1943 bei Stalingrad geschlagen"],ans:[0,1,3]},
+// ---- GESCHICHTE Teil 2 ----
+{cat:"Geschichte",q:"Was sind wichtige Gründe dafür, dass in Österreich vorwiegend Deutsch gesprochen wird?",opts:["Bestimmung durch die Habsburger","Zuwanderung der Ungarn","Zuwanderung der Alemannen","Zuwanderung der Bajuwaren"],ans:[2,3]},
+{cat:"Geschichte",q:"Was waren Ergebnisse des Wiener Kongresses 1814/1815?",opts:["Gründung Spaniens","Gründung Englands","Gründung des Deutschen Bundes","Abgabe niederländischer Besitztümer"],ans:[2,3]},
+{cat:"Geschichte",q:"Wann war der Erste Weltkrieg?",opts:["1911 bis 1914","1939 bis 1945","1914 bis 1918","1944 bis 1948"],ans:[2]},
+{cat:"Geschichte",q:"Welche wichtigen Dinge passierten im Jahre 1955?",opts:["Ende des Zweiten Weltkrieges","Unterzeichnung des Staatsvertrages","Fall des Eisernen Vorhangs","Ende der Besatzungszeit"],ans:[1,3]},
+{cat:"Geschichte",q:"Wie hießen die vier alliierten Besatzungsmächte?",opts:["Frankreich, Spanien, Sowjetunion, USA","Frankreich, Großbritannien, Sowjetunion, USA","Frankreich, Großbritannien, Japan, USA","Frankreich, Großbritannien, China, USA"],ans:[1]},
+{cat:"Geschichte",q:"Welche ist eine der anerkannten Minderheiten in Österreich?",opts:["Schweizer","Slowenen","Schweden","Italiener"],ans:[1]},
+{cat:"Geschichte",q:"Warum waren viele Einwohner nach der Gründung der Ersten Republik unzufrieden?",opts:["Großer Wirtschaftsraum wurde als negativ empfunden","Viele wünschten sich den Anschluss an Deutschland","Abtrennung von Südtirol wurde als ungerecht empfunden","Viele wollten nicht Bürger eines kleinen Staates sein"],ans:[1,2,3]},
+{cat:"Geschichte",q:"Wer war der erste Bundeskanzler der Zweiten Republik?",opts:["Julius Raab","Leopold Figl","Karl Renner","Adolf Schärf"],ans:[1]},
+{cat:"Geschichte",q:"Welches Ereignis fand im Februar 1934 statt?",opts:["Bundeskanzler Dollfuß schaltet das Parlament aus","Habsburger kommen an die Macht","Kein besonderes Ereignis","Bürgerkrieg"],ans:[3]},
+{cat:"Geschichte",q:"Welches Wirtschaftssystem hat Österreich?",opts:["freie Marktwirtschaft","zentralgelenkte Planwirtschaft","soziale Marktwirtschaft","Zentralverwaltungswirtschaft"],ans:[2]},
+{cat:"Geschichte",q:'Warum wurde Österreich als Vielvölker-Staat bezeichnet?',opts:["Weil die Bevölkerung stark gestiegen war","Weil in Österreich viele verschiedene Völker lebten","Weil viele Bürger im Ausland Urlaub machten","Weil jeder Bürger mehrere Sprachen konnte"],ans:[1]},
+{cat:"Geschichte",q:"Welche Staaten entstanden nach dem Zerfall Österreich-Ungarns?",opts:["Italien","Polen","Tschechoslowakei","Ungarn (verkleinert)"],ans:[1,2,3]},
+{cat:"Geschichte",q:"Was bedeutet eine Inflation?",opts:["Preis für Güter steigt","Für denselben Geldbetrag kann man weniger kaufen","Wert des Geldes sinkt","Bevölkerung schwindet"],ans:[0,1,2]},
+{cat:"Geschichte",q:"Welche Folgen hatte die Unzufriedenheit nach der Gründung der Ersten Republik?",opts:["Hohe Auswanderung","Feindschaft unter den Parteien","politische Radikalisierung","Antisemitismus"],ans:[1,2,3]},
+{cat:"Geschichte",q:"Zu welchem großen Reich gehörte Österreich ab dem Jahre Null fast 500 Jahre lang?",opts:["Zum Ägyptischen Reich","Zum Chinesischen Reich","Zum Persischen Reich","Zum Römischen Reich"],ans:[3]},
+// ---- GESCHICHTE Teil 3 ----
+{cat:"Geschichte",q:"Wie wird die Europäische Freihandelszone abgekürzt?",opts:["KSZE","EFTA","FEA","EWR"],ans:[1]},
+{cat:"Geschichte",q:"Wie hieß Österreich in der ältesten Urkunde?",opts:["Australia","Austria","Auserreich","Ostarrichi"],ans:[3]},
+{cat:"Geschichte",q:"Wann entstand die Monarchie Österreich-Ungarn?",opts:["1945","1816","1918","1867"],ans:[3]},
+{cat:"Geschichte",q:"Was waren wesentliche Forderungen in der Revolution von 1848?",opts:["Mehr Rechte für den Kaiser","Unabhängigkeit vom Kaiserreich (z.B. Ungarn)","Eine Verfassung","Freiheit und Bürgerrechte"],ans:[1,2,3]},
+{cat:"Geschichte",q:"Welche Aussagen zur Besatzungszeit sind richtig?",opts:["Österreich war 1945–1955 in vier Zonen geteilt","Wien war in vier Zonen geteilt","Wien war in zwei Zonen geteilt","Österreich blieb eine Einheit"],ans:[0,1]},
+{cat:"Geschichte",q:"Was ist ein Putsch?",opts:["Eine Zählung der Bevölkerung","Ein Versuch, die Regierung zu stürzen","Ein Putsch kann gewaltsam sein","Ein Umsturz einer kleinen Gruppe, um die Macht zu übernehmen"],ans:[1,2,3]},
+{cat:"Geschichte",q:"Wann trat Österreich der EU bei?",opts:["1995","2005","1987","1985"],ans:[0]},
+{cat:"Geschichte",q:"Welche Regierungsform hatte Österreich bis 1918?",opts:["Diktatur","Monarchie","Keine","Demokratie"],ans:[1]},
+{cat:"Geschichte",q:"Wann wurde das Wahlrecht (vorerst nur für Männer) eingeführt?",opts:["1925","1848","1897","1907"],ans:[3]},
+{cat:"Geschichte",q:"Woran erkennt man UNO-Soldaten?",opts:["an den weißen Helmen","an den gelben Helmen","an den grünen Helmen","an den blauen Helmen"],ans:[3]},
+{cat:"Geschichte",q:"Welche heutigen Staaten gehörten zeitweise zum Kaiserreich Österreich?",opts:["Slowakei","Finnland","Ungarn","Kroatien"],ans:[0,2,3]},
+{cat:"Geschichte",q:"Wann wurde die Zweite Türkenbelagerung abgewehrt?",opts:["1809","1683","1776","1492"],ans:[1]},
+{cat:"Geschichte",q:"Von wem stammte die Melodie zur österreichischen Bundeshymne der Zweiten Republik?",opts:["Haydn","Mozart","Schubert","Brahms"],ans:[1]},
+{cat:"Geschichte",q:'Was erhofften sich viele Österreicher vom Anschluss an Deutschland 1938?',opts:["einen wirtschaftlichen Aufschwung","familiäre Entlastung","Demokratie","ein Ende der Arbeitslosigkeit"],ans:[0,3]},
+{cat:"Geschichte",q:"Wann endete die Monarchie in Österreich?",opts:["1918","1945","1914","1818"],ans:[0]},
+// ---- GESCHICHTE Teil 4 ----
+{cat:"Geschichte",q:"Was war im Friedensvertrag von 1919 mit Österreich vereinbart?",opts:["Name: Österreich-Ungarn","Keine Vereinigung mit Deutschland","Name: Republik Österreich","Keine Vereinigungen"],ans:[1,2]},
+{cat:"Geschichte",q:"Welche Staatsform erhielt Österreich 1918?",opts:["Diktatur","Monarchie","demokratische Republik","Alleinherrschaft"],ans:[2]},
+{cat:"Geschichte",q:"Was ist das Budget?",opts:["Arbeitsvermittlung","Versicherung","Haushaltsplan","Konzern"],ans:[2]},
+{cat:"Geschichte",q:"Wann wurde die Republik Österreich ausgerufen?",opts:["November 1914","November 1918","Oktober 1923","Februar 1918"],ans:[1]},
+{cat:"Geschichte",q:'Was bedeutet der Begriff Absolutismus?',opts:["Polizeiherrschaft","Alleinherrschaft","Das Recht des Stärkeren","Volksherrschaft"],ans:[1]},
+{cat:"Geschichte",q:"Wie lange dauerte die Römerzeit?",opts:["fast 500 Jahre","fast 50 Jahre","fast 200 Jahre","fast 1000 Jahre"],ans:[0]},
+{cat:"Geschichte",q:"Wann wurde die wiedererlangte Unabhängigkeit Österreichs erklärt?",opts:["27. April 1945","27. April 1940","27. April 1950","27. April 1946"],ans:[0]},
+{cat:"Geschichte",q:"Wo war auf dem Gebiet Österreichs das größte Konzentrationslager?",opts:["Wien","Graz","Mauthausen","St. Pölten"],ans:[2]},
+{cat:"Geschichte",q:"Wie nannte man die Zusammenkunft der Monarchen 1814/1815 in Wien?",opts:["Innsbrucker Kongress","Tiroler Kongress","Wiener Kongress","Linzer Kongress"],ans:[2]},
+{cat:"Geschichte",q:"Wie hieß die einzige Frau an der Spitze des Hauses Habsburg?",opts:["Marie Antoinette","Marie Ann","Kaiserin Elisabeth","Maria Theresia"],ans:[3]},
+{cat:"Geschichte",q:"Wann war der Zweite Weltkrieg zu Ende?",opts:["Juli 1944","Mai 1945","Juni 1949","August 1940"],ans:[1]},
+{cat:"Geschichte",q:"Wie hieß der erste Bundespräsident der Zweiten Republik?",opts:["Alexander Van der Bellen","Karl Renner","Bruno Kreisky","Julius Raab"],ans:[1]},
+{cat:"Geschichte",q:"Bis wann dauerte die Besatzungszeit nach dem 2. Weltkrieg?",opts:["1944","1945","1955","1947"],ans:[2]},
+{cat:"Geschichte",q:"War die Revolution von 1848 in Österreich erfolgreich?",opts:["Nein, kein Parlament wurde gewählt","Nein, viele Revolutionäre wurden hingerichtet","Nein, sie wurde 1849 von Kaiser Franz Josef unterdrückt","Ja, alle Forderungen wurden erfüllt"],ans:[2]},
+{cat:"Geschichte",q:"Wie heißt der militärische Zusammenschluss der westlichen Staaten 1949?",opts:["UNO","COMECON","NATO","EFTA"],ans:[2]},
+// ---- GESCHICHTE Teil 5 ----
+{cat:"Geschichte",q:"Warum war Österreich bis 1453 ein Herzogtum und dann bis 1806 ein Erzherzogtum?",opts:["Ausländische Post wurde schneller zugestellt","Durch demokratische Wahlen","Der Herzog ergaunerte sich besondere Privilegien","Falsche Nutzung im Katasteramt"],ans:[2]},
+{cat:"Geschichte",q:"Welche Aussagen zum Putschversuch der Nationalsozialisten 1934 treffen zu?",opts:["Die Machtübernahme gelang problemlos","Die Machtübernahme scheiterte","Die Nationalsozialisten ermordeten Bundeskanzler Dollfuß","Die Machtübernahme gelang erst im März 1938"],ans:[1,2,3]},
+{cat:"Geschichte",q:"Wann wurde der österreichische Staatsvertrag unterzeichnet?",opts:["05. Mai 1965","10. Mai 1950","15. Mai 1955","20. Mai 1960"],ans:[2]},
+{cat:"Geschichte",q:"Was ist vorrangiges Ziel der UNO?",opts:["Bekämpfung des Hungers","Nie wieder Krieg","Erhöhung der Wirtschaftsleistung","Bekämpfung der Armut in Afrika"],ans:[1]},
+{cat:"Geschichte",q:"Wer wurde 1918 der erste Staatskanzler der Republik Österreich?",opts:["Sebastian Kurz","Josef Klaus","Karl Renner","Johann Schober"],ans:[2]},
+{cat:"Geschichte",q:"Welche Familie regierte ab 1273 Österreich?",opts:["Familie Amberger","Familie Habsburg","Familie Grundmann","Familie von und zu Guttenberg"],ans:[1]},
+{cat:"Geschichte",q:"Was ist das Kyoto-Protokoll?",opts:["Abkommen zur Reduzierung des Treibgas-Ausstoßes","EU-Vertrag","Statistik","Klima-Rahmenübereinkommen"],ans:[0,3]},
+{cat:"Geschichte",q:'Was gehörte zur industriellen Revolution?',opts:["Industriebetriebe (Eisen- und Stahlindustrie)","Eisenbahnen und Dampfschiffe","Verkehrsnetze","Schulpflicht"],ans:[0,1,2]},
+{cat:"Geschichte",q:"Wann wurde die immerwährende Neutralität Österreichs erklärt?",opts:["21. Dezember 1955","15. November 1955","1. Mai 1955","26. Oktober 1955"],ans:[3]},
+{cat:"Geschichte",q:'Wer galt im 18. Jahrhundert als die große Reformerin?',opts:["Margarete","Maria Amelia","Anna von Tirol","Maria Theresia"],ans:[3]},
+{cat:"Geschichte",q:"Welches Ereignis löste am 1. September 1939 den 2. Weltkrieg aus?",opts:["Belagerung Wiens","Abzug deutscher Truppen aus Spanien","Angriff auf Pearl Harbor","Einmarsch in Polen"],ans:[3]},
+{cat:"Geschichte",q:"Wann ist eine Regierung autoritär?",opts:["Wenn es Gewaltenteilung gibt","Wenn nur eine Führungsperson regiert","Wenn Meinungsfreiheit herrscht","Wenn sie ohne demokratische Kontrolle regiert"],ans:[1,3]},
+{cat:"Geschichte",q:"Welche Städte haben ihren Ursprung in der Römerzeit?",opts:["Graz","Leoben","Linz","Wien"],ans:[2,3]},
+{cat:"Geschichte",q:"Was trug nach der Gründung der Zweiten Republik zu einer neuen Identität bei?",opts:["Parteizugehörigkeit","wirtschaftlicher Aufschwung","Wiederaufbau","Wohlstand"],ans:[1,2,3]},
+{cat:"Geschichte",q:"Wie wird der militärische Zusammenschluss der osteuropäischen Staaten 1955 genannt?",opts:["Prager Pakt","Brünner Pakt","Brüssler Pakt","Warschauer Pakt"],ans:[3]},
+// ---- GESCHICHTE Teil 6 ----
+{cat:"Geschichte",q:"Wie wurde der US-Hilfsplan nach 1947 für europäische Staaten genannt?",opts:["Schillingplan","USA-Plan","Marshallplan","Dollarplan"],ans:[2]},
+{cat:"Geschichte",q:"Welche Gebiete musste Österreich 1919 abtreten?",opts:["Südtirol und Kärnten","Steiermark und Kärnten","Steiermark und Burgenland","Südtirol und Sudetendeutsche Gebiete"],ans:[3]},
+{cat:"Geschichte",q:"Wer war bei der Unterzeichnung des Staatsvertrages Außenminister?",opts:["Leopold Figl","Julius Raab","Bruno Kreisky","Karl Renner"],ans:[0]},
+{cat:"Geschichte",q:"Wer war der erste vom Volk gewählte Bundespräsident der Zweiten Republik?",opts:["Leopold Figl","Julius Raab","Theodor Körner","Rudolf Kirchschläger"],ans:[2]},
+{cat:"Geschichte",q:"Welche Reformen veränderten Österreich in den 1970er Jahren?",opts:["Ausbau von Schulen und Universitäten","Gleiche Rechte für Männer und Frauen","Allgemeine Schulpflicht","Rauchverbot auf öffentlichen Plätzen"],ans:[0,1]},
+{cat:"Geschichte",q:"Welche Siedler kamen nach der Römerzeit ins Land?",opts:["Ungarn","Slawen","Bajuwaren","Italiener"],ans:[0,1,2]},
+{cat:"Geschichte",q:"Welche Reformen blieben trotz des Scheiterns der Revolution von 1848?",opts:["Bürgermeister wurde vom Kaiser ernannt","Bürgermeister und Gemeinderat demokratisch gewählt","Befreiung der Bauern von ihren Grundbesitzern","Gründung von Bezirksgerichten"],ans:[1,2,3]},
+{cat:"Geschichte",q:"Welche Krisen erlebte die Republik Österreich nach ihrer Gründung?",opts:["Bankenkrise","Arbeitslosigkeit","Hohe Inflation","Revolution"],ans:[0,1,2]},
+{cat:"Geschichte",q:"Was fand 1978 bezüglich des Atomkraftwerks Zwentendorf statt?",opts:["Umweltverträglichkeitsprüfung","Meinungsumfrage","Volksabstimmung","Inbetriebnahme"],ans:[2]},
+{cat:"Geschichte",q:"Seit wann ist Österreich ein Bundesstaat?",opts:["September 1919","März 1938","Oktober 1920","November 1918"],ans:[2]},
+{cat:"Geschichte",q:"Wo wurde der Staatsvertrag unterzeichnet?",opts:["Schloss Belvedere in Wien","Burg Ehrenberg","Schloss Mirabell in Salzburg","Uhrturm in Graz"],ans:[0]},
+{cat:"Geschichte",q:"Welche EU-Entscheidungen beeinflussen den Alltag der Österreicher?",opts:["Einführung des Euro","Allgemeine Pensionsreform","Einführung gesetzlicher Feiertage","EU-Bürger dürfen nicht schlechter behandelt werden"],ans:[0,3]},
+{cat:"Geschichte",q:'Wer wurde nach dem Anschluss an Hitler-Deutschland verfolgt?',opts:["Juden","Roma und Sinti","Nationalsozialisten","Menschen mit Behinderung"],ans:[0,1,3]},
+// ---- DEMOKRATIE Teil 1 ----
+{cat:"Demokratie",q:"Warum ist die Aufteilung der Staatsaufgaben wichtig?",opts:["Damit Medien kontrolliert werden","Damit die Macht nicht an einer Stelle konzentriert ist","Damit die Wirtschaftsleistung gleich bleibt","Damit der Staat seine Macht nicht missbraucht"],ans:[1,3]},
+{cat:"Demokratie",q:"Womit finanziert der Staat hauptsächlich sein öffentliches Bildungssystem?",opts:["Aus Steuern","Aus Vereinsbeiträgen","Aus Spendengeldern","Aus Krankenversicherungsbeiträgen"],ans:[0]},
+{cat:"Demokratie",q:"Ab wann dürfen österreichische Staatsbürger wählen?",opts:["Abhängig vom Bundesland","Männer ab 18 Jahren","Männer und Frauen ab 16 Jahren","Frauen ab 18 Jahren"],ans:[2]},
+{cat:"Demokratie",q:"Was muss vor Verleihung der Staatsbürgerschaft abgelegt werden?",opts:["Offenbarungseid","Gelöbnis","die individuelle Freiheit","die Arbeit"],ans:[1]},
+{cat:"Demokratie",q:"Was ist das Plenum?",opts:["Versammlung aller Umweltaktivisten","Vollversammlung aller 183 Abgeordneten","Versammlung der Opposition","Sitzung des Ministerrates"],ans:[1]},
+{cat:"Demokratie",q:"Wo ist geregelt, wofür Bund und Bundesländer zuständig sind?",opts:["In der Europäischen Menschenrechtskonvention","In der Charta der Vereinten Nationen","In der Österreichischen Bundesverfassung","In EU-Beschlüssen"],ans:[2]},
+{cat:"Demokratie",q:'Was bedeutet der Begriff Demokratie?',opts:["Polizeiherrschaft","Volksherrschaft","Alleinherrschaft","Das Recht des Stärkeren"],ans:[1]},
+{cat:"Demokratie",q:"Was sind die wichtigsten Grundlagen der Rechtsordnung in Österreich?",opts:["Schulbücher","Das Recht der EU","Lexika","Die Bundesverfassung"],ans:[1,3]},
+{cat:"Demokratie",q:"Welche Vorschriften haben für das Zusammenleben in Österreich Vorrang?",opts:["religiöse Vorschriften","gesellschaftliche Traditionen","Rechtsordnung","eigener Vorteil"],ans:[2]},
+{cat:"Demokratie",q:"Wie viele Mitgliedstaaten hat derzeit die Europäische Union?",opts:["27","20","30","28"],ans:[0]},
+{cat:"Demokratie",q:"Welches ist kein österreichisches Bundesland?",opts:["Burgenland","Salzburg","Unterösterreich","Wien"],ans:[2]},
+{cat:"Demokratie",q:"Was versteht man unter Opposition?",opts:["Parteien, die die Regierung nicht unterstützen","keine Partei","Parteien, die die Regierung unterstützen","Regierungspartei"],ans:[0]},
+{cat:"Demokratie",q:"Was kennzeichnet einen liberalen Staat?",opts:["Man darf alles machen, auch wenn es schadet","Es gibt keine Gesetze","Ein Leben in größtmöglicher Freiheit","Freie Wahl von Beruf oder Studium"],ans:[2,3]},
+{cat:"Demokratie",q:"Welche Aufgabe hat der Rechnungshof?",opts:["Prüfung der Privatbanken","Rechnungs- und Gebarungskontrolle","Prüfung von Fahrschulen","Prüfung der Universitäten"],ans:[1]},
+{cat:"Demokratie",q:"Wer verleiht die österreichische Staatsbürgerschaft?",opts:["Bezirksrat","Bundesregierung","Gemeinderat","Landesregierung"],ans:[3]},
+// ---- DEMOKRATIE Teil 2 ----
+{cat:"Demokratie",q:"Wo kann eine Beschwerde über eine Grundrechtsverletzung eingebracht werden?",opts:["Bezirksgericht","Krankenhaus","Verfassungsgerichtshof (VfGH)","Bundeskanzleramt"],ans:[2]},
+{cat:"Demokratie",q:"Wer ist das Staatsoberhaupt der Republik Österreich?",opts:["Der Bundespräsident","Der Nationalratspräsident","Der Landeshauptmann","Der Bundeskanzler"],ans:[0]},
+{cat:"Demokratie",q:"Welche gehören zu den nichtstaatlichen Organisationen (NGOs)?",opts:["Österreichisches Rotes Kreuz","Wirtschaftskammer","Caritas","Bundesarbeitskammer"],ans:[0,2]},
+{cat:"Demokratie",q:"Nennen Sie Merkmale der Demokratie:",opts:["Meinungsforschung","Meinungsumfrage","Gewaltenteilung","Meinungsfreiheit"],ans:[2,3]},
+{cat:"Demokratie",q:"Was gehört zu den Staatsaufgaben?",opts:["Sozialpartnerschaft","Gerichtsbarkeit","Gesetzgebung","Verwaltung"],ans:[1,2,3]},
+{cat:"Demokratie",q:"Welches Land ist kein EU-Mitglied?",opts:["Schweiz","Lettland","Malta","Italien"],ans:[0]},
+{cat:"Demokratie",q:"Ab welchem Alter darf man bei einer Nationalratswahl wählen?",opts:["20. Lebensjahr","18. Lebensjahr","16. Lebensjahr","17. Lebensjahr"],ans:[2]},
+{cat:"Demokratie",q:"Was fasst Staatsvolk, Staatsgebiet und Staatsgewalt zusammen?",opts:["Bundesland","Land","Staat","Gemeinde"],ans:[2]},
+{cat:"Demokratie",q:"Die Farben der Flagge Österreichs sind:",opts:["grün-rot-blau","rot-weiß-rot","rot-weiß-grün","rot-weiß-blau"],ans:[1]},
+{cat:"Demokratie",q:"Es gibt 4 Grundfreiheiten der EU. Welche?",opts:["freier Personenverkehr","freier Straßenverkehr","freier Kapitalverkehr","freier Warenverkehr"],ans:[0,2,3]},
+{cat:"Demokratie",q:"Wie viele Abgeordnete bilden den Nationalrat?",opts:["274","230","183","130"],ans:[2]},
+{cat:"Demokratie",q:"Wo ist der Sitz des Europäischen Gerichtshofes für Menschenrechte?",opts:["Straßburg","Genf","Berlin","Brüssel"],ans:[0]},
+{cat:"Demokratie",q:"Wie heißt das Gemeindeamt in einer Stadt mit eigenem Statut?",opts:["Magistrat","Landrat","Bezirksrat","Gemeinderat"],ans:[0]},
+{cat:"Demokratie",q:"Wie heißen zwei der vier Grundsätze der Republik Österreich?",opts:["Demokratischer Grundsatz","Bundeseinheitlicher Grundsatz","solidarischer Grundsatz","Vollziehende Gewalt"],ans:[0]},
+{cat:"Demokratie",q:"Welche sind österreichische Bundesländer?",opts:["Burgenland","Salzburg","Unterösterreich","Wien"],ans:[0,1,3]},
+// ---- DEMOKRATIE Teil 3 ----
+{cat:"Demokratie",q:"Was ist die Legislative?",opts:["die Pressefreiheit","Rechtsprechende Gewalt","Vollziehende Gewalt","Gesetzgebende Gewalt"],ans:[3]},
+{cat:"Demokratie",q:"Welche Rechte haben EU-Bürger?",opts:["Sich die Staatsbürgerschaft eines EU-Landes auszusuchen","Kostenlos Verkehrsmittel anderer EU-Länder benutzen","Sich in allen EU-Ländern aufzuhalten","Das Europäische Parlament zu wählen"],ans:[2,3]},
+{cat:"Demokratie",q:"Wie heißt der derzeitige Bundespräsident Österreichs?",opts:["Karl Renner","Heinz Fischer","Sebastian Kurz","Alexander Van der Bellen"],ans:[3]},
+{cat:"Demokratie",q:"Wie viele Bundesländer hat Österreich?",opts:["7","5","4","9"],ans:[3]},
+{cat:"Demokratie",q:"Eine Aufgabe des Nationalrates ist:",opts:["Bildung der Bundesregierung","Beratung und Beschluss der Bundesgesetze","Erneuerung der Gemeindestraßen","Vertretung der Interessen der Bundesländer"],ans:[1]},
+{cat:"Demokratie",q:"Welches Menschenrecht wird durch eine Zwangsehe verletzt?",opts:["freie Wahl des Wohnortes","freie Wahl des Ehegatten","freie Wahl des Berufes","die Erziehung der Kinder"],ans:[1]},
+{cat:"Demokratie",q:"Welche Aufgaben hat die Volksanwaltschaft?",opts:["Missstände in der Verwaltung prüfen","Missstände in der Bevölkerung prüfen","Missstände in Banken prüfen","Missstände in Parteien prüfen"],ans:[0]},
+{cat:"Demokratie",q:"Nennen Sie Mittel der direkten Demokratie:",opts:["Volksbegehren","Volksbefragung","Volksabstimmung","Entsendung von Abgeordneten"],ans:[0,1,2]},
+{cat:"Demokratie",q:"Was ist die offizielle Währung der Mehrheit der EU-Mitgliedstaaten?",opts:["Schweizer Franken","Schwedische Krone","Britisches Pfund","Euro"],ans:[3]},
+{cat:"Demokratie",q:"Nennen Sie eine Aufgabe des Bundespräsidenten:",opts:["Ombudsmann","Oberbefehlshaber des Bundesheeres","Richter","Landeshauptmann"],ans:[1]},
+{cat:"Demokratie",q:"Wie heißt der derzeitige Bundeskanzler?",opts:["Sebastian Kurz","Karl Nehammer","Brigitte Bierlein","Christian Stocker"],ans:[3]},
+{cat:"Demokratie",q:"Wo ist der Kommissionssitz der EU?",opts:["Brüssel","Luxemburg","Berlin","Straßburg"],ans:[0]},
+{cat:"Demokratie",q:"Wie lautet die erste Zeile der österreichischen Bundeshymne?",opts:["Volk begnadet für das Schöne","Land der Hämmer zukunftsreich","Land der Äcker, Land der Dome","Land der Berge, Land am Strome"],ans:[3]},
+{cat:"Demokratie",q:"Welches Organ wird vom Landtag gewählt?",opts:["Gemeinderat","Bundesregierung","Landesregierung","Nationalrat"],ans:[2]},
+{cat:"Demokratie",q:"Was heißt indirekte Demokratie?",opts:["Gewählte Abgeordnete beschließen Gesetze","Das Volk entscheidet selbst über Gesetze","NGOs beschließen Gesetze","Gerichte beschließen Gesetze"],ans:[0]},
+// ---- DEMOKRATIE Teil 4 ----
+{cat:"Demokratie",q:"Was macht den österreichischen Rechtsstaat aus?",opts:["Gesetze dürfen Grund- und Menschenrechte nicht verletzen","Es muss mindestens drei Parteien geben","Der Staat muss sich an die Gesetze halten","Richter sind dem BMI unterstellt"],ans:[0,2]},
+{cat:"Demokratie",q:"Wen binden Gleichheitsgrundsätze und Diskriminierungsverbote?",opts:["Gesetzgebung und Vollziehung","Haustiere","Automobilindustrie","Autobahnen"],ans:[0]},
+{cat:"Demokratie",q:"Welche Gesetze beschließt der Landtag?",opts:["Landesgesetze","Bundesgesetze","Gemeindegesetze","Bezirksgesetze"],ans:[0]},
+{cat:"Demokratie",q:"Wie lange dauert die Amtsperiode des Bundespräsidenten?",opts:["6 Jahre","2 Jahre","5 Jahre","4 Jahre"],ans:[0]},
+{cat:"Demokratie",q:"Welche Institution wurde für die Gleichstellung von Frauen und Männern geschaffen?",opts:["Anwältin für Gleichbehandlung","Staatsanwälte","Landeshauptmann","Rechnungshof"],ans:[0]},
+{cat:"Demokratie",q:"Welche Form der Regierung hat Österreich derzeit?",opts:["Minderheitsregierung","Alleinregierung","Regierung ohne Opposition","Koalitionsregierung"],ans:[3]},
+{cat:"Demokratie",q:"Ist der Ehrenmord (die Blutrache) in Österreich verboten und strafbar?",opts:["nein","Dies ist nicht gesetzlich geregelt","vielleicht","ja"],ans:[3]},
+{cat:"Demokratie",q:"Welche Staatsform hat Österreich?",opts:["Demokratische Republik","Diktatur","Monarchie","Alleinherrschaft"],ans:[0]},
+{cat:"Demokratie",q:"In welchen Abständen sind Nationalratswahlen vorgeschrieben?",opts:["4 Jahre","3 Jahre","6 Jahre","5 Jahre"],ans:[3]},
+{cat:"Demokratie",q:"Wer wählt die Mitglieder des Bundesrates?",opts:["Bundestag","Nationalrat","Landtag","Ministerrat"],ans:[2]},
+{cat:"Demokratie",q:"Anspruch auf Schutz, Sicherheit und Hilfe haben:",opts:["Diebe","Gewalttäter","Opfer von Gewalt","Triebtäter"],ans:[2]},
+{cat:"Demokratie",q:"Wie heißt der derzeitige Vizekanzler von Österreich?",opts:["Sebastian Kurz","Heinz Fischer","Andreas Babler","Werner Kogler"],ans:[2]},
+{cat:"Demokratie",q:"Wer zählt zum Staatsvolk?",opts:["Staatsbürger","Touristen","alle Unternehmer","Fremde"],ans:[0]},
+{cat:"Demokratie",q:"In welchen Abständen sind die Wahlen zum Europäischen Parlament vorgeschrieben?",opts:["alle 3 Jahre","alle 4 Jahre","alle 5 Jahre","alle 6 Jahre"],ans:[2]},
+{cat:"Demokratie",q:"Was fasst Legislative, Exekutive und Judikative zusammen?",opts:["Gewaltenteilung","Pers.zählung","Militärbegriff","Vollziehende Gewalt"],ans:[0]},
+// ---- DEMOKRATIE Teil 5 ----
+{cat:"Demokratie",q:"Wer ernennt die Bundesregierung?",opts:["Bundeskanzler","Bürgermeister","Bundespräsident","Landeshauptmann"],ans:[2]},
+// ---- NIEDERÖSTERREICH Teil 1 ----
+{cat:"Niederösterreich",q:"Mit welcher Bahn würden Sie von St. Pölten nach Wien fahren?",opts:["Ostbahn","Südbahn","Nordbahn","Westbahn"],ans:[3]},
+{cat:"Niederösterreich",q:"Zu den bedeutenden Niederösterreicherinnen und Niederösterreichern gehören …?",opts:["Brigitte Bierlein","Franz König","Helene Kafka","Joseph Haydn"],ans:[0,1,3]},
+{cat:"Niederösterreich",q:"Wie lange dauert in Österreich die Schulpflicht?",opts:["11 Jahre","16 Jahre","9 Jahre","12 Jahre"],ans:[2]},
+{cat:"Niederösterreich",q:"Welche Einrichtungen des Landes Niederösterreich übersiedelten bis 1997 nach St. Pölten?",opts:["Landesregierung","Landtag","Amt der Niederösterreichischen Landesregierung","Landesrat"],ans:[0,1,2]},
+{cat:"Niederösterreich",q:"Wie hieß bis 1918 das Erzherzogtum, das heute das Bundesland Niederösterreich ist?",opts:["Wien","Amstetten","Niederösterreich","Österreich"],ans:[3]},
+{cat:"Niederösterreich",q:"Wann erfolgte die Trennung Wiens von Niederösterreich?",opts:["1919","1920","1918","1922"],ans:[1]},
+{cat:"Niederösterreich",q:"Wie hieß das römische St. Pölten?",opts:["Aelium Quantum","Poeltum","Aelium Cetium","Vindobona"],ans:[2]},
+{cat:"Niederösterreich",q:"Wo befindet sich heute der Sitz des niederösterreichischen Landtages und der niederösterreichischen Landesregierung?",opts:["Tulln","Krems","Wiener Neustadt","St. Pölten"],ans:[3]},
+{cat:"Niederösterreich",q:"Aus welchen heutigen Bundesländern bestand Österreich im Jahre 1156?",opts:["Oberösterreich","Wien","Steiermark","Niederösterreich"],ans:[3]},
+{cat:"Niederösterreich",q:"Welche Bundesländer entstanden aufgrund des Trennungsgesetzes am 1. Jänner 1922?",opts:["Niederösterreich","Steiermark","Salzburg","Wien"],ans:[0,3]},
+{cat:"Niederösterreich",q:"Zu welchen Nachbarländern hat Niederösterreich seit der Ostöffnung 1989 starke wirtschaftliche und kulturelle Beziehungen?",opts:["Ungarn","Slowakei","Polen","Tschechien"],ans:[0,1,3]},
+{cat:"Niederösterreich",q:"Aus welchen heutigen Bundesländern bestand Österreich im Jahre 1156?",opts:["Niederösterreich und Salzburg","Niederösterreich und Teile Kärnten","Burgenland und Teile Niederösterreichs","Niederösterreich und Teile Oberösterreichs"],ans:[3]},
+{cat:"Niederösterreich",q:"An welchen Staat verlor Niederösterreich nach dem Ersten Weltkrieg im sogenannten Friedensvertrag von St. Germain bedeutende Gebiete?",opts:["Wien","Slowenien","Tschechoslowakei","Ungarn"],ans:[2]},
+{cat:"Niederösterreich",q:"In welcher Stadt befindet sich das Alte Niederösterreichische Landhaus (seit 2005 \u201ePalais Niederösterreich\u201c)?",opts:["Krems","Enns","Wien","St. Pölten"],ans:[2]},
+{cat:"Niederösterreich",q:"Wie heißt der höchste Berg Niederösterreichs?",opts:["Schneeberg","Zugspitze","Dachstein","Wildspitze"],ans:[0]},
+// ---- NIEDERÖSTERREICH Teil 2 ----
+{cat:"Niederösterreich",q:"Wann wurde der Landtagsbeschluss gefasst, St. Pölten zur Landeshauptstadt zu erheben?",opts:["1967","1992","1986","1990"],ans:[2]},
+{cat:"Niederösterreich",q:"Welchen Staaten gehörten die meisten Zwangsarbeiter im Reichsgau Niederdonau an?",opts:["Italien","Frankreich","Sowjetunion","Tschechoslowakei"],ans:[2]},
+{cat:"Niederösterreich",q:"Welches Landesviertel ist kein niederösterreichisches?",opts:["Mostviertel","Weinviertel","Tennengau","Waldviertel"],ans:[2]},
+{cat:"Niederösterreich",q:"Wer erbaute im ersten Jahrhundert nach Christi Geburt die pannonische Provinzhauptstadt Carnuntum?",opts:["Slawen","Franzosen","Römer","Griechen"],ans:[2]},
+{cat:"Niederösterreich",q:"Welche als Weltkulturerbe anerkannte Gebirgsbahn baute Karl Ritter von Ghega?",opts:["Semmeringbahn","Nordbahn","Westbahn","Südbahn"],ans:[0]},
+{cat:"Niederösterreich",q:"Wieviele Landesviertel hat Niederösterreich?",opts:["4","6","20","12"],ans:[0]},
+{cat:"Niederösterreich",q:"Nach dem Aussterben der Babenberger wurde Otakar II. Premysl in Österreich Landesfürst. In welchem Land war er schon vorher König?",opts:["Slowakei","Steiermark","Tirol","Böhmen"],ans:[3]},
+{cat:"Niederösterreich",q:"Was waren wichtige Städte im römischen Niederösterreich?",opts:["Vindobona","Carnuntum","Aelium Cetium","Ovilava"],ans:[0,1,2]},
+{cat:"Niederösterreich",q:"Welcher niederösterreichischer Komponist mit Weltruf wurde in Rohrau bei Bruck an der Leitha geboren?",opts:["Haydn","Brahms","Mozart","Marx"],ans:[0]},
+{cat:"Niederösterreich",q:"Wo befand sich bis 1997 der Sitz des Niederösterreichischen Landestages und der Niederösterreichischen Landesregierung?",opts:["Graz","St. Pölten","Melk","Wien"],ans:[3]},
+{cat:"Niederösterreich",q:"Welche Religion setzte sich seit der spätrömischen Zeit in Niederösterreich durch?",opts:["Buddhismus","Christentum","Judentum","Islam"],ans:[1]},
+{cat:"Niederösterreich",q:"Welche Bewegung war vom letzten Viertel des 19. Jahrhunderts bis 1918 die dominante politische Kraft in Niederösterreich?",opts:["Christlichsoziale Bewegung","Nationalsozialistische Bewegung","Kommunistische Bewegung","Sozialistische Bewegung"],ans:[0]},
+{cat:"Niederösterreich",q:"Welche bedeutenden Klosterbauten entstanden in Niederösterreich in der Barockzeit?",opts:["Admont","Melk","Göttweig","Klosterneuburg"],ans:[1,2,3]},
+{cat:"Niederösterreich",q:"Wo befand sich bis 1986 der Sitz des Niederösterreichischen Landtages und der Niederösterreichischen Landesregierung?",opts:["St. Pölten","Wiener Neustadt","Klagenfurt","Wien"],ans:[3]},
+{cat:"Niederösterreich",q:"Welchen Staaten gehörten die meisten Zwangsarbeiter im Reichsgau Niederdonau an?",opts:["Polen","Türkei","Tschechoslowakei","Frankreich"],ans:[0,2]},
+// ---- NIEDERÖSTERREICH Teil 3 ----
+{cat:"Niederösterreich",q:"Welche bedeutende Skulptur der Urzeit wurde in Niederösterreich gefunden?",opts:["Venus von Willendorf","Noricum","Venus von Österreich","Venus von Niederösterreich"],ans:[0]},
+{cat:"Niederösterreich",q:"Welche Autobahn verbindet die Westautobahn (A1) mit der Südautobahn (A2)?",opts:["Nordautobahn","Westautobahn","Außenringautobahn","Südautobahn"],ans:[2]},
+{cat:"Niederösterreich",q:"Welche österreichische politische Bewegung entstand 1888 im niederösterreichischen Hainfeld?",opts:["SPÖ","Die Grünen","FPÖ","ÖVP"],ans:[0]},
+{cat:"Niederösterreich",q:"Welche Siegermacht des Zweiten Weltkrieges besetzte Niederösterreich von 1945 bis 1955?",opts:["Amerikaner","Franzosen","Britten","Sowjets"],ans:[3]},
+{cat:"Niederösterreich",q:"Wer gilt als der Retter des Wienerwaldes?",opts:["Josef Schöffel","Franz Müller","Franz Jonas","Franz Pröll"],ans:[0]},
+{cat:"Niederösterreich",q:"Wie heißen die Busse, die aus den östlichen und nördlichen Landesvierteln in die Landeshauptstadt St. Pölten fahren?",opts:["Katze","Cat","Eichhörnchen","Wiesel"],ans:[1]},
+{cat:"Niederösterreich",q:"Welche niederösterreichische Landesviertel liegen südlich der Donau?",opts:["Waldviertel","Industrieviertel","Weinviertel","Mostviertel"],ans:[1,3]},
+{cat:"Niederösterreich",q:"Welche niederösterreichische Politiker prägte wie kein anderer die Zeit von 1945 bis 1955?",opts:["Renner","Figl","Johann","Jonas"],ans:[1]},
+{cat:"Niederösterreich",q:"Welcher große Strom fließt von Westen nach Osten durch das Land Niederösterreich?",opts:["Drau","Donau","Rhein","Krems"],ans:[1]},
+{cat:"Niederösterreich",q:"Unter welchem Fürstengeschlecht begann der Landesausbau Niederösterreichs?",opts:["Hohenzollern","Wittelsberger","Babenberger","Habsburger"],ans:[2]},
+{cat:"Niederösterreich",q:"Seit wann gibt es in Niederösterreich einen Landtag?",opts:["1811","1941","1861","1920"],ans:[2]},
+{cat:"Niederösterreich",q:"Wie heißen die Busse, die das Wald-, Wein- und Industrieviertel mit der Landeshauptstadt verbinden?",opts:["Bärenbusse","Hermelinbusse","Maderbusse","Wieselbusse"],ans:[2]},
+{cat:"Niederösterreich",q:"Wer besetzte und plünderte 1800/01, 1805 und 1809 große Teile Niederösterreichs?",opts:["Türken","Franzosen","Schweden","Bayern"],ans:[1]},
+{cat:"Niederösterreich",q:"Wie viele Einwohner hat Niederösterreich derzeit?",opts:["ca. 751.000","ca. 1.474.000","ca. 1.672.000","ca. 1.889.000"],ans:[2]},
+{cat:"Niederösterreich",q:"Niederösterreichische Statutarstädte sind...?",opts:["Krems an der Donau","Melk","Waidhofen an der Ybbs","St. Pölten"],ans:[0,2,3]},
+// ---- NIEDERÖSTERREICH Teil 4 ----
+{cat:"Niederösterreich",q:"Wie sieht das Landeswappen von Niederösterreich aus?",opts:["Sechs goldene Adler auf blauem Schild","Vier goldene Adler auf blauem Schild","Ein goldener Adler auf grünem Schild","Fünf goldene Adler auf blauem Schild"],ans:[3]},
+{cat:"Niederösterreich",q:"Das Erzherzogtum Österreich unter der Enns bestand bis 1918; wie hieß sein Nachfolger?",opts:["Republik Österreich","Republik Bayern","Republik Slowenien","Republik Niederösterreich"],ans:[0]},
+{cat:"Niederösterreich",q:"Die Markgrafschaft Österreich wurde 1156 von Bayern abgetrennt und selbst ein …?",opts:["Herzogtum","Republik","Königreich","Kaiserreich"],ans:[0]},
+{cat:"Niederösterreich",q:"Wie heißt der Chef der niederösterreichischen Landesregierung?",opts:["Präsident","Direktor","Landeshauptmann","Kanzler"],ans:[2]},
+{cat:"Niederösterreich",q:"Zu den bedeutenden Niederösterreichern gehören …?",opts:["Oskar Kokoschka","Konrad Lorenz","Julius Raab","Sebastian Kurz"],ans:[1,2]},
+{cat:"Niederösterreich",q:"Wie hieß Niederösterreich von 1938 bis 1945?",opts:["Reichsgau Niederdonau","Reichsgau Wien","Reichsgau Niederösterreich","Reichgau Oberdonau"],ans:[0]},
+{cat:"Niederösterreich",q:"Welche Klöster gründete Markgraf Leopold III. der Heilige?",opts:["Stift St. Lambrecht","Stift Admont","das Kloster Heiligenkreuz","das Stift Klosterneuburg"],ans:[2,3]},
+{cat:"Niederösterreich",q:"Wen wählt der Gemeinderat?",opts:["Gemeindevorstand","Bundeskanzler","Bürgermeister","Landeshauptmann"],ans:[2]},
+{cat:"Niederösterreich",q:"Wie viele Bezirkshauptmannschaften (Verwaltungsbezirke) hat Niederösterreich?",opts:["22","21","20","19"],ans:[1]},
+{cat:"Niederösterreich",q:"In welchem niederösterreichischen Viertel werden Erdöl und Erdgas gefördert?",opts:["Weinviertel","Waldviertel","Industrieviertel","Mostviertel"],ans:[0]},
+{cat:"Niederösterreich",q:"Welche ist die einwohnerreichste Stadt in Niederösterreich?",opts:["Wiener Neustadt","Klosterneuburg","Baden","St. Pölten"],ans:[3]},
+{cat:"Niederösterreich",q:"Wie hieß das Reich, dessen Zentrum Wien und Niederösterreich bis 1806 waren?",opts:["Erzherzogtum unter der Schwarza","Erzherzogtum unter der Donau","Erzherzogtum unter der Enns","Erzherzogtum Steiermark"],ans:[2]},
+{cat:"Niederösterreich",q:"Welche Stadt war bis 1918 die Hauptstadt des Landes Niederösterreich?",opts:["Wien","Salzburg","Linz","St. Pölten"],ans:[0]},
+{cat:"Niederösterreich",q:"Mit welcher Bahn würden Sie von Wien nach Wr. Neustadt fahren?",opts:["Südbahn","Westbahn","Nordbahn","Ostbahn"],ans:[0]},
+{cat:"Niederösterreich",q:"Welche Länder gehörten zum habsburgischen Besitz?",opts:["die österreichischen Länder","die ungarischen Länder","die tschechischen Länder","die böhmischen Länder"],ans:[0,1,3]},
+{cat:"Niederösterreich",q:"Zu welchen römischen Provinzen gehörten große Teile des heutigen Niederösterreich?",opts:["Ovilava","Pannonia","Bayern","Noricum"],ans:[1,3]},
+{cat:"Niederösterreich",q:"Wie heißen die beiden größten natürlichen Seen Niederösterreichs?",opts:["Erlaufsee","Neusiedler See","Wörther See","Lunzer See"],ans:[0,3]},
+{cat:"Niederösterreich",q:"Wer plante und erbaute die Semmeringbahn?",opts:["Rudolf Kirchschläger","Jonas Bauer","Karl Ritter von Ghega","Franz Jonas"],ans:[2]},
+// ---- BURGENLAND Teil 1 ----
+{cat:"Burgenland",q:"Welche Armee besetzte 1945 das Burgenland?",opts:["Deutsche Armee","Russische Armee","Britische Armee","US-Armee"],ans:[1]},
+{cat:"Burgenland",q:"In welchem Jahr wurde Eisenstadt zum Sitz der Landesbehörden?",opts:["1920","1921","1925","1945"],ans:[2]},
+{cat:"Burgenland",q:"Welche Volksgruppe ist im Gebiet des heutigen Burgenlandes nach den Türkenkriegen im 16. und 17. Jahrhundert angesiedelt worden?",opts:["Italiener","Schweden","Kroaten","Slowaken"],ans:[2]},
+{cat:"Burgenland",q:"Welche Farben sind die Landesfarben des Burgenlandes?",opts:["Schwarz-Rot-Gold","Rot-Schwarz","Rot-Gold","Rot-Weiß-Rot"],ans:[2]},
+{cat:"Burgenland",q:"Wie viele Bezirke hat das Burgenland?",opts:["7","9","11","4"],ans:[0]},
+{cat:"Burgenland",q:"Von welcher Macht der Alliierten des Zweiten Weltkrieges war das Burgenland in den Jahren 1945 bis 1955 besetzt?",opts:["Von den Amerikanern","Von den Russen","Von den Briten","Von den Franzosen"],ans:[1]},
+{cat:"Burgenland",q:"Wie heißt die Landeshymne des Burgenlandes?",opts:["Bundeslied","Meine schöne Heimat","Mein Vaterland über alles","Mein Heimatvolk, mein Heimatland"],ans:[3]},
+{cat:"Burgenland",q:"Ab welchem Lebensalter darf man im Burgenland die Mitglieder des Landtages und Gemeinderates sowie den Bürgermeister wählen?",opts:["Ab 20 Jahren","Ab 18 Jahren","Ab 17 Jahren","Ab 16 Jahren"],ans:[3]},
+{cat:"Burgenland",q:"Wie heißt die bedeutendste Adelsfamilie im Burgenland?",opts:["Schönborn","Wittgenstein","Esterhazy","Habsburg"],ans:[2]},
+{cat:"Burgenland",q:"Wie heißt der burgenländische Landespatron?",opts:["Heiliger Paul","Heiliger Johannes","Heiliger Martin","Heiliger Sepp"],ans:[2]},
+{cat:"Burgenland",q:"Welche Parteien sind im Burgenländischen Landtag vertreten?",opts:["SPÖ, ÖVP, FPÖ und Grüne","SPÖ, ÖVP, Grüne","SPÖ, Grüne, KPÖ","SPÖ, FPÖ, ÖVP, Grüne und LBL"],ans:[0]},
+{cat:"Burgenland",q:"Burgenland hat im Jahr 2001 das Jubiläum seiner Entstehung gefeiert. Welches Jubiläum wurde damals gefeiert?",opts:["80 Jahre Burgenland","70 Jahre Burgenland","100 Jahre Burgenland","60 Jahre Burgenland"],ans:[0]},
+{cat:"Burgenland",q:"Wie heißt die höchste Erhebung des Burgenlandes?",opts:["Großglockner","Geschriebenstein","Gesprochenhoch","Hohe Wand"],ans:[1]},
+{cat:"Burgenland",q:"Welche der folgenden Volksgruppen ist im Burgenland neben der deutschsprachigen Bevölkerung am stärksten vertreten?",opts:["Slowenen","Kroaten","Sinti","Italiener"],ans:[1]},
+{cat:"Burgenland",q:"Welche der folgenden Einwohnerzahlen trifft für das Burgenland am ehesten zu?",opts:["Rund 277.000 Einwohner","Rund 127.000 Einwohner","Rund 314.000 Einwohner","Rund 297.000 Einwohner"],ans:[3]},
+// ---- BURGENLAND Teil 2 ----
+{cat:"Burgenland",q:"Wann wurde das Burgenland Teil der Republik Österreich?",opts:["1911","1921","1945","1925"],ans:[1]},
+{cat:"Burgenland",q:"Zu welchem Staat gehörte das heutige Burgenland vor dem Ersten Weltkrieg?",opts:["Slowakei","Ungarn","Tschechien","Kroatien"],ans:[1]},
+{cat:"Burgenland",q:"Welche sprachliche Minderheit gehört neben den Roma noch zu den anerkannten Volksgruppen im Burgenland?",opts:["Italiener","Slowenen","Kroaten","Ungarn"],ans:[2,3]},
+{cat:"Burgenland",q:"Zu welcher gesetzlich anerkannten Kirche oder Religionsgemeinschaft bekennen sich die meisten Burgenländer?",opts:["Anglikanische Kirche","Katholische Kirche","Orthodoxe Kirche","Protestantische Kirche"],ans:[1]},
+{cat:"Burgenland",q:"Wie nannte man im Allgemeinen das Gebiet des heutigen Burgenlandes vor dem Ersten Weltkrieg?",opts:["Burgenland","Deutsch-Westungarn","Deutsch-Burgenland","Deutsch-Ostungarn"],ans:[1]},
+{cat:"Burgenland",q:"An welche Nachbarstaaten grenzt das Burgenland?",opts:["Slowakei, Ungarn, Slowenien","Slowakei, Kroatien, Slowenien","Tschechien, Ungarn, Italien","Italien, Ungarn, Schweiz"],ans:[0]},
+{cat:"Burgenland",q:"Wie heißt jenes Organ, welches im Burgenland die Landesgesetze beschließt?",opts:["Nationalrat","Landesrat","Burgenländischer Landtag","Bundesrat"],ans:[2]},
+{cat:"Burgenland",q:"An welche Bundesländer Österreichs grenzt das Burgenland?",opts:["Oberösterreich, Wien","Wien, Kärnten","Kärnten, Tirol","Niederösterreich, Steiermark"],ans:[3]},
+{cat:"Burgenland",q:"Welches Land war das Ziel der meisten burgenländischen Auswanderer?",opts:["Vereinigte Staaten von Amerika","Deutschland","Australien","Schweden"],ans:[0]},
+{cat:"Burgenland",q:"Welche Symbole finden Sie auf dem Landeswappen des Burgenlandes?",opts:["Drache","Adler","See","Brustschild"],ans:[1,3]},
+{cat:"Burgenland",q:"Im Burgenland ist der 11. November ein Feiertag. Was wird an diesem Tag gefeiert?",opts:["Gar nichts","Erntedankfest","Martini (Martinstag)","Der Feiertag des Landespatrons Hl. Martin"],ans:[3]},
+{cat:"Burgenland",q:"Wie viele Mitglieder hat die Burgenländische Landesregierung?",opts:["11","5","9","7"],ans:[3]},
+{cat:"Burgenland",q:"Durch welchen Komponisten wurde Eisenstadt über die Grenzen unseres Landes hinaus berühmt?",opts:["Joseph Haydn","Mozart","Hans Werner Henze","Franz Liszt"],ans:[0]},
+{cat:"Burgenland",q:"Wie heißt die Landeshauptstadt von Burgenland?",opts:["Wiener Neustadt","Eisenstadt","Wien","Rust"],ans:[1]},
+{cat:"Burgenland",q:"Wann hat die Ansiedlung der kroatischen Volksgruppe im Burgenland begonnen?",opts:["Im 18. Jahrhundert","Im 17. Jahrhundert","Im 16. Jahrhundert","Im 19. Jahrhundert"],ans:[2]},
+// ---- BURGENLAND Teil 3 ----
+{cat:"Burgenland",q:"Als das Burgenland von Ungarn getrennt und zu Österreich kam, fand eine Volksabstimmung über eine heutige ungarische Stadt statt. Welche Stadt hatte diese Volksabstimmung?",opts:["Sopron (Ödenburg)","Wien","Eisenstadt","Andau"],ans:[0]},
+{cat:"Burgenland",q:"Wie hieß die international bekannte Tänzerin aus Eisenstadt?",opts:["Fanny Elßler","Hilde Holger","Gertrud Bodenwieser","Grete Wiesenthal"],ans:[0]},
+{cat:"Burgenland",q:"Wie viele Gemeinden gibt es im Burgenland?",opts:["171","160","169","180"],ans:[2]},
+{cat:"Burgenland",q:"Wie heißt der größte See des Burgenlandes?",opts:["Traunsee","Wörthersee","Attersee","Neusiedler See"],ans:[3]},
+{cat:"Burgenland",q:"Welche ist die bevölkerungsreichste Stadt im Burgenland?",opts:["Neusiedl am See","Oberwart","Eisenstadt","Mattersburg"],ans:[2]},
+{cat:"Burgenland",q:"Wie viele Parteien sind im Burgenländischen Landtag nach der letzten Wahl vertreten?",opts:["4","3","5","6"],ans:[1]},
+{cat:"Burgenland",q:"Wann wurden im Burgenland politische Gegner, Juden, Sinti und Roma besonders verfolgt?",opts:["Während des Ersten Weltkrieges (1914–1918)","Während der Revolution 1848/49","Vor und während des Zweiten Weltkrieges","In den 1950er Jahren"],ans:[2]},
+{cat:"Burgenland",q:"Welche Brücke wurde während des ungarischen Volksaufstands 1956 international bekannt?",opts:["Teufelsbrücke","Brücke von Mörbisch","Brücke von Apetlon","Brücke von Andau"],ans:[3]},
+{cat:"Burgenland",q:"In welcher burgenländischen Gemeinde fanden Schießereien statt, die 1927 zu einem Wiener Arbeiteraufstand führten?",opts:["Schattendorf","Schreckendorf","Schachendorf","Schartendorf"],ans:[0]},
+{cat:"Burgenland",q:"Wo befindet sich der Sitz des burgenländischen Landtages?",opts:["Eisenstadt","Weiden","Mörbisch","Neusiedl am See"],ans:[0]},
+{cat:"Burgenland",q:"Wann wurden die Roma als Volksgruppe im Burgenland anerkannt?",opts:["1983","1993","1976","2001"],ans:[1]},
+{cat:"Burgenland",q:"Was geschah mit dem Burgenland nach dem Anschluss?",opts:["Das Burgenland blieb erhalten","Geteilt zwischen Oberösterreich und Wien","Geteilt zwischen Niederösterreich und Steiermark","Geteilt zwischen Ungarn und Österreich"],ans:[2]},
+{cat:"Burgenland",q:"Welcher berühmte Komponist wurde im heutigen Burgenland geboren?",opts:["Heuberger","Brahms","Mozart","Franz Liszt"],ans:[3]},
+{cat:"Burgenland",q:"Wie viele Mitglieder hat der burgenländische Landtag?",opts:["40","50","36","30"],ans:[2]},
+{cat:"Burgenland",q:"Welcher Arzt mit burgenländischen Wurzeln besiegte das Kindbettfieber und wurde als \u201eRetter der Mütter\u201c bekannt?",opts:["Alexander Fleming","Ignaz Philipp Semmelweis","Lorenz Böhler","Franz Rudolf"],ans:[1]},
+// ---- OBERÖSTERREICH Teil 1 ----
+{cat:"Oberösterreich",q:"Oberösterreich ist ein Pionierland der europäischen Eisenbahngeschichte. Die erste Eisenbahn des europäischen Kontinents war...?",opts:["die Pferdeeisenbahn Gmunden - Linz - Budweis","die Eisenbahnstrecke Salzburg - Budweis","die Eisenbahnstrecke Salzburg - Linz","die Eisenbahnstrecke Linz - Grein"],ans:[0]},
+{cat:"Oberösterreich",q:"Wo verbrachte der Maler und Grafiker Alfred Kubin den größten Teil seines Lebens?",opts:["Zwickledt bei Schärding","Graz","Niederösterreich","Wien"],ans:[0]},
+{cat:"Oberösterreich",q:"In welcher Stadt befand sich die von Joseph Werndl gegründete Fabrik zur Waffenherstellung?",opts:["Wels","Steyr","Freistadt","Linz"],ans:[1]},
+{cat:"Oberösterreich",q:"Im großen Bauernaufstand von 1626 widersetzten sich die oberösterreichischen Bauern...?",opts:["dem Straßenbau","der bayerischen Pfandherrschaft und dem Religionszwang","Stefan Fadinger","dem Kaiser"],ans:[1]},
+{cat:"Oberösterreich",q:"Wie nennt man die Verwaltungsbehörden der politischen Bezirke?",opts:["Bezirkgerichte","Gemeindeämter","Bezirkshauptmannschaften","Polizei"],ans:[2]},
+{cat:"Oberösterreich",q:"Ein hoher römischer Beamter wurde 304 wegen seines Glaubens in der Enns ertränkt. Er ist heute Landespatron von Oberösterreich. Wer ist das?",opts:["Bonifatius","Paul","Florian","Severin"],ans:[2]},
+{cat:"Oberösterreich",q:"Nach dem Zweiten Weltkrieg war Oberösterreich von zwei Mächten besetzt. Diese waren...?",opts:["Frankreich und Großbritannien","Schweden und Italien","Amerika und Sowjetunion","Großbritannien und Italien"],ans:[2]},
+{cat:"Oberösterreich",q:"Das oberösterreichische Landeswappen geht auf das Wappen zurück von...?",opts:["der Habsburger","des Erzherzogs Johann","der Herren von Machland","der Grafen von Lambach"],ans:[2]},
+{cat:"Oberösterreich",q:"Wer ist der bekannteste Musiker und Komponist Oberösterreichs?",opts:["Ans Schnopfhagen","Franz Schubert","Franz Welser-Möst","Anton Bruckner"],ans:[3]},
+{cat:"Oberösterreich",q:"Wie hieß die berühmte Bildhauerfamilie, die vom 17. bis 19. Jahrhundert in Ried im Innviertel tätig war?",opts:["Gruber","Schwanthaler","Schärdinger","Rieder"],ans:[1]},
+{cat:"Oberösterreich",q:"Das oberösterreichische Hausruckgebiet war ein Zentrum...?",opts:["des Obsthandels","der Fischerei","des Bergbaues","des Salzhandels"],ans:[2]},
+{cat:"Oberösterreich",q:"Die Pyhrn-Eisenwurzen-Region war ein Zentrum der...?",opts:["des Schiffsbaues","Eisenverarbeitung und Werkzeugherstellung (z.B. Sensen)","Autoherstellung","des Flugzeugbaues"],ans:[1]},
+{cat:"Oberösterreich",q:"Wie viele Einwohner hat Oberösterreich derzeit?",opts:["ca. 1.889.000","ca. 751.000","ca. 1.671.000","ca. 1.530.000"],ans:[0]},
+{cat:"Oberösterreich",q:"Was ist das bedeutende Kunstwerk im Stift Kremsmünster?",opts:["Tassilo-Kelch","Albert Dürers Feldhase","Venus von Willendorf","Mona Lisa"],ans:[0]},
+{cat:"Oberösterreich",q:"Zu welcher römischen Provinz gehörte Oberösterreich?",opts:["Pannonia","Lentia","Noricum","Raetia"],ans:[2]},
+// ---- OBERÖSTERREICH Teil 2 ----
+{cat:"Oberösterreich",q:"Wie heißt die älteste Stadt in Oberösterreich?",opts:["Steyr","Graz","Enns","Linz"],ans:[2]},
+{cat:"Oberösterreich",q:"Zwei Einrichtungen auf oberösterreichischem Gebiet töteten Menschen aus politischen/rassischen Gründen. Welche waren das?",opts:["KZ Mauthausen und Tötungsanstalt Hartheim","KZ Dachau und Buchenwald","KZ Melk und Amstetten","Tötungsanstalten Bernburg und Hadamar"],ans:[0]},
+{cat:"Oberösterreich",q:"Die Landesfarben Oberösterreichs sind: …?",opts:["Rot - Grün","Blau - Grün","Blau - Gelb","Weiß - Rot"],ans:[1]},
+{cat:"Oberösterreich",q:"Wie heißt der Vertreter des Landes und Vorsitzende der Landesregierung?",opts:["Nationalrat","Bundespräsident","Landesrat","Landeshauptmann"],ans:[3]},
+{cat:"Oberösterreich",q:"Wer verfasste den Text der oberösterreichischen Landeshymne?",opts:["Alois Brandstetter","Adalbert Stifter","Wolfgang Amadeus Mozart","Franz Stelzhamer"],ans:[3]},
+{cat:"Oberösterreich",q:"Welche ist die einwohnerreichste Stadt in Oberösterreich?",opts:["Leonding","Wels","Linz","Steyr"],ans:[2]},
+{cat:"Oberösterreich",q:"Welche oberösterreichischen Städte haben ein eigenes Statut?",opts:["Linz, Wels, Steyr","Schärding, Ried, Braunau","Gmunden, Vöcklabruck, Kirchdorf","Braunau, Kirchdorf, Salzburg"],ans:[0]},
+{cat:"Oberösterreich",q:"Welcher bedeutende Schriftsteller schilderte den Böhmerwald in seinen Werken?",opts:["Adalbert Stifter","Dietmar von Aist","Bregenzerwald","Alois Brandstetter"],ans:[0]},
+{cat:"Oberösterreich",q:"Welche religiösen Einrichtungen befinden sich in Kremsmünster, Engelszell, St. Florian u.a.?",opts:["Fabriken","Fahrschulen","Schulen","Klöster"],ans:[3]},
+{cat:"Oberösterreich",q:"Seit 1490 heißt die oberösterreichische Landeshauptstadt: …?",opts:["Machland","Steyr","Wels","Linz"],ans:[3]},
+{cat:"Oberösterreich",q:"Wie heißen die vier Landesviertel Oberösterreichs?",opts:["Mühlviertel, Innviertel, Hausruckviertel, Traunviertel","Linz, Wels, Steyr, Enns","Innviertel, Ennstal, Hausruckviertel, Traunviertel","Atterseeregion, Ennstal, Machland, Eferdinger Becken"],ans:[0]},
+{cat:"Oberösterreich",q:"Welche zwei Nachkriegspolitiker Oberösterreichs prägten die Zusammenarbeit besonders?",opts:["Felix Kern und Ludwig Bernaschek","Johann Blöchl und Franz Blum","Felix Kern und Johann Blöchl","Dr. Heinrich Gleißner und Dr. Ernst Koref"],ans:[3]},
+{cat:"Oberösterreich",q:"Wie hieß die Region, bevor 1918 der Name \u201eOberösterreich\u201c offiziell wurde?",opts:["Bayern","Vorderösterreich","Niederösterreich","Land ob der Enns"],ans:[3]},
+{cat:"Oberösterreich",q:"Auf welchen Zeitraum gehen die frühesten Belege menschlicher Besiedlung in Oberösterreich zurück?",opts:["Römerzeit","Altsteinzeit","Bronzezeit","Völkerwanderungszeit"],ans:[1]},
+{cat:"Oberösterreich",q:"Welche Entwicklung in der Zwischenkriegszeit beeinflusste die Zusammenarbeit der politischen Kräfte nach 1945?",opts:["Bürgerkrieg","Industrialisierung","New Yorker Börsenkrach","Die Goldenen Zwanziger"],ans:[0]},
+// ---- OBERÖSTERREICH Teil 3 ----
+{cat:"Oberösterreich",q:"Welches Mineral wurde schon vor 3000 Jahren in Hallstatt abgebaut?",opts:["Kupfer","Salz","Diamanten","Bronze"],ans:[1]},
+{cat:"Oberösterreich",q:"Was war der älteste und bedeutendste Industriezweig im Mühlviertel?",opts:["die Textilindustrie","Glasindustrie","Holzverarbeitung","Papierindustrie"],ans:[0]},
+{cat:"Oberösterreich",q:"Wie heißt die gesetzgebende Volksvertretung des Bundeslandes?",opts:["Bundesrat","Nationalrat","Gemeinderat","Landtag"],ans:[3]},
+{cat:"Oberösterreich",q:"Seit wann üben Frauen in Österreich bzw. Oberösterreich das Wahlrecht aus?",opts:["seit 1805","seit 1848","seit 1919","seit 1945"],ans:[2]},
+{cat:"Oberösterreich",q:"Zu welcher Hymne stammt der Text von Franz Stelzhamer?",opts:["Salzburger Landeshymne","Oberösterreichische Landeshymne","Tiroler Landeshymne","Österreichische Bundeshymne"],ans:[1]},
+{cat:"Oberösterreich",q:"Eine bedeutende Fremdenverkehrsregion Oberösterreichs verdankt ihre Popularität Kaiser Franz Joseph, der dort Sommerfrische machte. Um welche Region handelt es sich?",opts:["Donautal","Salzkammergut","Oberösterreichischer Zentralraum","Bregenzerwald"],ans:[1]},
+{cat:"Oberösterreich",q:"In welchen zwei Orten in Oberösterreich befinden sich berühmte gotische Flügelaltäre?",opts:["Gmunden und Schärding","St. Wolfgang und Kefermarkt","St. Florian und Lambach","Steyr und Linz"],ans:[1]},
+{cat:"Oberösterreich",q:"Wie heißt einer der größten stahlverarbeitenden Industriebetriebe Österreichs mit Sitz in Linz?",opts:["AMAG (Aluminium-Magnesium AG)","VOEST","Schoeller-Bleckmann","Böhler-Uddeholm"],ans:[1]},
+{cat:"Oberösterreich",q:"Welches oberösterreichische Landesviertel kam 1779 durch den Frieden von Teschen von Bayern zu Österreich?",opts:["Traunviertel","Hausruckviertel","Innviertel","Mühlviertel"],ans:[2]},
+{cat:"Oberösterreich",q:"Welches Mineral wurde schon vor 3000 Jahren in Hallstatt abgebaut?",opts:["Blei","Eisen","Kupfer","Salz"],ans:[3]},
+// ---- STEIERMARK Teil 1 ----
+{cat:"Steiermark",q:"Seit wann ist die Steiermark mit Österreich verbunden?",opts:["seit 500","seit 1945","seit 1192","seit 1919"],ans:[2]},
+{cat:"Steiermark",q:"Wie viele Gemeinden hat die Steiermark?",opts:["43","134","452","287"],ans:[2]},
+{cat:"Steiermark",q:"Welche Personengruppen waren am alten Landtag vertreten (der nicht vom Volk gewählt wurde)?",opts:["die Bauern","ein Vertreter für sämtliche landesfürstliche Städte und Märkte","der Adel","die hohe Geistlichkeit"],ans:[1,2,3]},
+{cat:"Steiermark",q:"Welche Farben hat die Fahne der Steiermark?",opts:["rot-weiß","Weiß-grün","gelb","schwarz"],ans:[1]},
+{cat:"Steiermark",q:"Der \u201eSteirische Herbst\u201c ist: …?",opts:["ein jährliches Festival moderner Kunst","eine trockene Weinsorte","eine Wetterlage im Herbst","eine Holzsorte"],ans:[0]},
+{cat:"Steiermark",q:"Wie viele Einwohner hat die Steiermark?",opts:["1.442.000","240.000","1.270.000","120.400"],ans:[0]},
+{cat:"Steiermark",q:"Die moderne Literatur des Landes bündelte sich im: …?",opts:["Forum Lehrreich","Forum Romanum","Forum Stadtpark","Forum Kaufhaus"],ans:[2]},
+{cat:"Steiermark",q:"Welcher Berg ist mit 2995 Metern der höchste der Steiermark?",opts:["Dachstein","Großglockner","Schöckl","Gerschkogel"],ans:[0]},
+{cat:"Steiermark",q:"Welche sind die ältesten steirischen Marktorte?",opts:["Feldbach","Hartberg","Graz","Judenburg"],ans:[3]},
+{cat:"Steiermark",q:"Im Jahre 1180 wurde das Land Steiermark erhoben…?",opts:["zu einem Herzogtum","zu einem Prinzenreich","zu einem Königreich","zu einem Bischofssitz"],ans:[0]},
+{cat:"Steiermark",q:"Im Friedensvertrag nach dem Ersten Weltkrieg 1919 musste die Republik Österreich einen Teil der Steiermark abtreten. Welchen?",opts:["die nördliche Obersteiermark","das südliche Burgenland","das Leibnitzer Feld","die Untersteiermark"],ans:[3]},
+{cat:"Steiermark",q:"Seit wann gibt es die freien politischen Gemeinden?",opts:["1918","1945","1818","1850"],ans:[3]},
+{cat:"Steiermark",q:"Johann Bernhard Fischer von Erlach war ein wichtiger Vertreter der steirischen Barockkultur. Was war er?",opts:["ein Barockbaumeister","ein Maler","ein Komponist","ein Bildhauer"],ans:[0]},
+{cat:"Steiermark",q:"Die Steiermark wird auch \u201eGrüne Mark\u201c genannt. Wegen: …?",opts:["der Natürlichkeit der Bürger","der grünen Farben im Landeswappen","des ausgeprägten Umweltbewusstseins","des hohen Waldanteils von 54%"],ans:[3]},
+{cat:"Steiermark",q:"Bis wann waren die Habsburger Landesfürsten der Steiermark?",opts:["700","1945","1798","1918"],ans:[3]},
+// ---- STEIERMARK Teil 2 ----
+{cat:"Steiermark",q:"Der Landeshauptmann wird: …?",opts:["vom Landtag gewählt","von der Bevölkerung gewählt","vom Präsidenten des Landtages ernannt","vom König ernannt"],ans:[0]},
+{cat:"Steiermark",q:"Wo wird Arbeit vermittelt?",opts:["im Rathaus","beim Arbeitsmarktservice","in der Schule","bei der Polizei"],ans:[1]},
+{cat:"Steiermark",q:"Im alten Landtag waren Adel, hohe Geistlichkeit sowie Städte und Märkte vertreten. Wie hießen diese drei Gruppen?",opts:["Feuerwehr","Gerichte","Landstände","Polizei"],ans:[2]},
+{cat:"Steiermark",q:"Was wurde unter Landesfürstin Maria Theresia (1740 - 1780) neu eingeführt?",opts:["die Volksschule","die allgemeine Schulpflicht","die Demokratie","alternative Energiegewinnung"],ans:[1]},
+{cat:"Steiermark",q:"Wie hieß die Provinz des römischen Reiches, zu der die heutige Steiermark gehörte?",opts:["Macedonia","Noricum","Africa","Brigantium"],ans:[1]},
+{cat:"Steiermark",q:"Welche ist die einwohnerreichste Stadt in der Steiermark?",opts:["Graz","Leoben","Kapfenberg","Bruck an der Mur"],ans:[0]},
+{cat:"Steiermark",q:"Wie nennt man den Vertreter des Bundeslandes Steiermark?",opts:["Bezirkshauptmann","Landeshauptmann","Bürgermeister","Bischof"],ans:[1]},
+{cat:"Steiermark",q:"Wo befindet sich in Graz die Babyklappe?",opts:["beim Eingang der Gebärklinik am Landeskrankenhaus Graz","beim Arzt","bei der Polizei","bei Tagesmüttern"],ans:[0]},
+{cat:"Steiermark",q:"In der Steiermark entstanden die ersten Städte und Märkte: …?",opts:["im 21. Jahrhundert","im 19. Jahrhundert","im 20. Jahrhundert","vom 11. bis 13. Jahrhundert"],ans:[3]},
+{cat:"Steiermark",q:"Welche Tourismusattraktionen bietet die Steiermark?",opts:["Thermenregion","das größte Freizeitpark Österreichs","Wintersportgebiete","Strände"],ans:[0,2]},
+{cat:"Steiermark",q:"Der Bürgermeister steht welcher Institution vor?",opts:["der Landesregierung","der Bundesregierung","einer Gemeinde","einer Bezirkshauptmannschaft"],ans:[2]},
+{cat:"Steiermark",q:"Wann wurde die Volksschule eingeführt?",opts:["im 18. Jahrhundert","unter der Regierungszeit von Kaiserin Maria Theresia","von Erzherzog Johann","in der Revolution 1948"],ans:[0,1]},
+{cat:"Steiermark",q:"Welcher ist der älteste steirische Marktort?",opts:["Graz","Feldbach","Judenburg","Weinitzen"],ans:[2]},
+{cat:"Steiermark",q:"Wie hieß die einzige Römerstadt in der heutigen Steiermark?",opts:["Rom","Antiochia","Graz","Flavia Solva"],ans:[3]},
+{cat:"Steiermark",q:"Welcher Kaiser begann mit dem Bau der landesfürstlichen Burg in der Hauptstadt Graz?",opts:["Kaiser Friedrich III.","Kaiser Ferdinand I.","Fischer von Erlach","Michelangelo"],ans:[0]},
+// ---- STEIERMARK Teil 3 ----
+{cat:"Steiermark",q:"Seit wann ist das \u201eDachsteinlied\u201c die offizielle Landeshymne?",opts:["1929","1943","1918","1818"],ans:[0]},
+{cat:"Steiermark",q:"Wofür ist die Gemeinde zuständig?",opts:["Landesverteidigung","Gemeindestraßen","Gerichtsbarkeit","Außenpolitik"],ans:[1]},
+{cat:"Steiermark",q:"Welche Partei ist von 2005 bis 2015 die stimmenstärkste Partei im Steiermärkischen Landtag?",opts:["KPÖ","SPÖ","ÖVP","FPÖ"],ans:[2]},
+{cat:"Steiermark",q:"Seit wann gibt es das allgemeine und gleiche Wahlrecht auch für Frauen?",opts:["1818","1919","1648","1848"],ans:[1]},
+{cat:"Steiermark",q:"Was versteht man unter \u201eindustrieller Revolution\u201c?",opts:["den Aufschwung der Industrie in der zweiten Hälfte des 19. Jahrhunderts","den Beginn des Computerzeitalters","die Entdeckung des Erzberges","den Übergang von der Agrar- zur Industriegesellschaft"],ans:[0,3]},
+{cat:"Steiermark",q:"Die Farben der Flagge Österreichs sind: …?",opts:["Rot-Weiß-Grün","Rot-Weiß-Blau","Rot-Weiß","Rot-Weiß-Rot"],ans:[3]},
+{cat:"Steiermark",q:"Unter welchem Begriff werden Staatsvolk, Staatsgebiet und Staatsgewalt zusammengefasst?",opts:["Parlament","Staat","Gemeinde","Bundesland"],ans:[1]},
+{cat:"Steiermark",q:"Von wem wurde 1585 die erste Universität in Graz gegründet?",opts:["vom Bundespräsidenten","vom Bischof","vom Bundesgerichtshof","von Erzherzog Karl II."],ans:[3]},
+{cat:"Steiermark",q:"Graz ist Landeshauptstadt der Steiermark: …?",opts:["seit 1789","seit 1945","seit dem 12. Jahrhundert","seit 1919"],ans:[2]},
+{cat:"Steiermark",q:"Wo gab es unter anderem in der Steiermark Konzentrationslager?",opts:["Ausschwitz","Hartberg","Peggau","Eisenerz"],ans:[2]},
+{cat:"Steiermark",q:"Wie viele Verwaltungsbezirke hat die Steiermark?",opts:["171","117","7","17"],ans:[3]},
+{cat:"Steiermark",q:"In welchem Jahr war Graz Europäische Kulturhauptstadt?",opts:["2009","2003","2001","2002"],ans:[1]},
+{cat:"Steiermark",q:"Zu den bedeutendsten kulturellen Veranstaltungen der Steiermark zählen …?",opts:["der Carinthische Sommer","die Steirische Lichtspiele","die Styriarte","der Steirischer Herbst"],ans:[2,3]},
+{cat:"Steiermark",q:"Wer übernahm im Juli 1945 die ganze Steiermark als Besatzungszone?",opts:["Spanier","Franzosen","Briten","Norwegen"],ans:[2]},
+{cat:"Steiermark",q:"Was wurde unter Kaiserin Maria Theresia (1740-1780) neu eingeführt?",opts:["der Euro","Kaffeehäuser","Stahlindustrie","Kataster und Grundbücher"],ans:[3]},
+// ---- STEIERMARK Teil 4 ----
+{cat:"Steiermark",q:"Wann wurde die steirische Landeshymne eingeführt?",opts:["1955","1934","1919","1929"],ans:[3]},
+{cat:"Steiermark",q:"Was versteht man unter \u201eStyriarte\u201c?",opts:["ein seit 1985 bestehendes Musikfestival","eine alljährliche Tanzgala in der Grazer Innenstadt","ein traditionelles Opernfest","ein jährlich stattfindendes Jazzfestival"],ans:[0]},
+{cat:"Steiermark",q:"Wann wurde Österreich an das nationalsozialistische Deutsche Reich angeschlossen?",opts:["1938","1918","1934","1945"],ans:[0]},
+{cat:"Steiermark",q:"Welches Volk lebte im Altertum in der heutigen Steiermark?",opts:["Illyrer","Kelten","Römer","Germanen"],ans:[1]},
+{cat:"Steiermark",q:"Wer war Erzherzog Johann?",opts:["Bruder des Kaisers Franz","Mitglied des Hauses Habsburg","Kaiser von Österreich","Feldmarschall der k.k. Armee"],ans:[0,1]},
+{cat:"Steiermark",q:"Wer ist seit 2022 Landeshauptmann der Steiermark?",opts:["Johanna Mikl-Leitner","Peter Kaiser","Christopher Drexler","Wilfried Haslauer"],ans:[2]},
+{cat:"Steiermark",q:"Wie heißt die Landeshauptstadt der Steiermark?",opts:["Graz","Bregenz","Innsbruck","Linz"],ans:[0]},
+{cat:"Steiermark",q:"Johann Josef Fux war ein wichtiger Vertreter der steirischen Barockkultur. Was war er?",opts:["ein Barockbildhauer","ein Barockmaler","ein Barockarchitekt","ein Barockkomponist"],ans:[3]},
+{cat:"Steiermark",q:"Im Herbst 1956 wurden in der Steiermark 20.000 Flüchtlinge aufgenommen. Aus welchem Land kamen sie?",opts:["Rumänien","Tschechoslowakei","Ungarn","Polen"],ans:[2]},
+{cat:"Steiermark",q:"Welche wichtigen Rechte regelte das Staatsgrundgesetz von 1867?",opts:["Meinungsfreiheit","Religionsfreiheit","die Freiheit der Person","Eigentumsfreiheit"],ans:[0,1,2,3]},
+{cat:"Steiermark",q:"Seit wann gibt es in der Steiermark regelmäßige Landtage?",opts:["1550","1869","1412","1700"],ans:[2]},
+{cat:"Steiermark",q:"Was mussten die Bauern für ihren Pachtgrund dem adeligen Grundherrn abliefern?",opts:["Weizen","Miete","Grundzins","Obst und Gemüse"],ans:[2]},
+{cat:"Steiermark",q:"Welches Wappensymbol hat das steirische Landeswappen?",opts:["Adler","Panther","Greif","Löwe"],ans:[1]},
+{cat:"Steiermark",q:"Wie heißt das größte Museum des Landes?",opts:["Volkskundemuseum Stübing","Kunsthaus Graz","Joanneum","Landeszeughaus Graz"],ans:[2]},
+{cat:"Steiermark",q:"Welche zwei politischen Parteien sind seit November 1945 die stimmenstärksten Parteien im Steiermärkischen Landtag?",opts:["SPÖ","FPÖ","Die Grünen","ÖVP"],ans:[0,3]},
+{cat:"Steiermark",q:"Erzherzog Johann gründete in der Steiermark viele noch bestehende kulturelle Institutionen. Welche war darunter?",opts:["Die Karl-Franzens-Universität Graz","das Joanneum","Das Kunsthaus Graz","die Steiermärkische Landesbibliothek"],ans:[1]},
+// ---- KÄRNTEN Teil 1 ----
+{cat:"Kärnten",q:"Wer war Markus Pernhart?",opts:["ein Erfinder","ein Landschaftsmaler","ein Schifahrer","ein Musiker"],ans:[1]},
+{cat:"Kärnten",q:"Wie viele Verwaltungsbezirke hat das Bundesland Kärnten?",opts:["15","31","22","10"],ans:[3]},
+{cat:"Kärnten",q:"Wann sind die Vorfahren der slowenischsprachigen Kärntner ins Land eingewandert?",opts:["Um 1000","Um 1800","Um 600","Um 800"],ans:[2]},
+{cat:"Kärnten",q:"Wann fand die Kärntner Volksabstimmung statt?",opts:["1920","1955","1948","1934"],ans:[0]},
+{cat:"Kärnten",q:"Zu welcher Dialektgruppe gehört die Mundart der deutschsprachigen Kärntner?",opts:["Alemannisch","Schwäbisch","Sächsisch","Südbairisch"],ans:[3]},
+{cat:"Kärnten",q:"Wo befindet sich ein Hauptwerk des Barockmalers Josef Ferdinand Fromiller?",opts:["in der Wiener Hofburg","im Vatikan","im Wappensaal des Landhauses in Klagenfurt","in der Festung Hohensalzburg"],ans:[2]},
+{cat:"Kärnten",q:"Nach wem ist ein jährlich in Klagenfurt stattfindender Literatur-Wettbewerb benannt?",opts:["Friedrich Schiller","Markus Pernhart","Ingeborg Bachmann","Christine Lavant"],ans:[2]},
+{cat:"Kärnten",q:"Wie hieß Kärnten im frühen Mittelalter?",opts:["Carinthia","Quarantäne","Koroka","Karantanien"],ans:[3]},
+{cat:"Kärnten",q:"Woraus wird der Kärntner Most hergestellt?",opts:["aus Orangen","aus Weintrauben","aus Äpfeln und Birnen","aus Pflaumen"],ans:[2]},
+{cat:"Kärnten",q:"Welcher Fluss liegt nicht in Kärnten?",opts:["Gurk","Drau","Mur","Salzach"],ans:[3]},
+{cat:"Kärnten",q:"Welche Farben hat die Landesfahne von Kärnten?",opts:["Gelb-Rot-Weiß","Weiß-Grün","Blau-Rot-Gelb","Rot-Weiß-Rot"],ans:[0]},
+{cat:"Kärnten",q:"Welches Wappensymbol hat das Kärntner Landeswappen?",opts:["drei Löwen","drei Panther","drei Adler","drei Pferde"],ans:[1]},
+{cat:"Kärnten",q:"Was ist der Carinthische Sommer?",opts:["ein Musikfest","eine Oper","Badewetter","eine Sportveranstaltung"],ans:[0]},
+{cat:"Kärnten",q:"Wer gehört zu den Landständen?",opts:["Adel","hohe Geistliche","Bauern","Ritter"],ans:[0,1,3]},
+{cat:"Kärnten",q:"Wer gründete die Treibacher Chemischen Werke?",opts:["Ludwig Wittgenstein","Sigmund Marcus","Carl Auer von Welsbach","Robert Bárány"],ans:[2]},
+// ---- KÄRNTEN Teil 2 ----
+{cat:"Kärnten",q:"Wie heißt die älteste Stadt Kärntens?",opts:["Bleiburg","Friesach","Gmünd","Villach"],ans:[1]},
+{cat:"Kärnten",q:"Welcher Nationalfeiertag wird in Österreich begangen?",opts:["17. November","8. Mai","26. Oktober","4. Juli"],ans:[2]},
+{cat:"Kärnten",q:"An welchem Fluss befinden sich Laufkraftwerke?",opts:["Lavant","Möll","Gail","Drau"],ans:[3]},
+{cat:"Kärnten",q:"Welcher Kaiser trägt den Beinamen \u201evon Kärnten\u201c?",opts:["Johann","Arnulf","Friedrich","Otto"],ans:[1]},
+{cat:"Kärnten",q:"Was ist Reindling?",opts:["ein süßes Germgebäck","Gelatinenersatz","ein Fleischeintopf","eine Suppe"],ans:[0]},
+{cat:"Kärnten",q:"Wo befindet sich der Kärntner Erzberg?",opts:["in Hüttenberg","im Drautal","in Wolfsberg","im Gailtal"],ans:[0]},
+{cat:"Kärnten",q:"Was lieferten die Kelten an die Römer?",opts:["Wein","Eisen","Käse","Elfenbein"],ans:[1]},
+{cat:"Kärnten",q:"Wann wurde der Österreichische Staatsvertrag unterzeichnet?",opts:["15. Mai 1955","8. Mai 1945","19. Oktober 1945","26. Oktober 1955"],ans:[0]},
+{cat:"Kärnten",q:"Was ist die zweitgrößte Religionsgemeinschaft in Österreich?",opts:["Katholische Kirche","Islamische Glaubensgemeinschaft","Buddhistische Gemeinde","Evangelische Kirche"],ans:[3]},
+{cat:"Kärnten",q:"Wie heißt die Kärntner Landeshymne?",opts:["An der blauen Drau","Glockners Eisgefilde","Land der Berge","Kärntner Heimatlied"],ans:[3]},
+{cat:"Kärnten",q:"Wie heißt die zweitgrößte Stadt Kärntens?",opts:["Kufstein","Villach","Spittal an der Drau","Klagenfurt"],ans:[1]},
+{cat:"Kärnten",q:"Wie heißt die einwohnerreichste Stadt Kärntens?",opts:["Villach","Spittal an der Drau","Klagenfurt am Wörthersee","Wolfsberg"],ans:[2]},
+{cat:"Kärnten",q:"Welcher Staat besetzte Kärnten 1945-1955?",opts:["USA","Sowjetunion","Frankreich","Großbritannien"],ans:[3]},
+{cat:"Kärnten",q:"Wann kam Kärnten zu Österreich?",opts:["1848","1918","1937","1955"],ans:[1]},
+{cat:"Kärnten",q:"In welchem Baustil ist der Dom zu Gurk errichtet?",opts:["Barock","Romanik","Gotik","Jugendstil"],ans:[1]},
+// ---- KÄRNTEN Teil 3 ----
+{cat:"Kärnten",q:"Wie heißt das bekannte Renaissance-Schloss in Spittal?",opts:["Porcia","Lodron","Wolfsberg","Habsburg"],ans:[0]},
+{cat:"Kärnten",q:"Der Bürgermeister wird…?",opts:["direkt von den Bürgern gewählt","vom Gemeinderat gewählt","für 6 Jahre gewählt","vom Landeshauptmann ernannt"],ans:[0]},
+{cat:"Kärnten",q:"Wo befindet sich der Siedlungsraum der slowenischen Volksgruppe?",opts:["im Süden Kärntens","im Osten Kärntens","im Westen Kärntens","im Norden Kärntens"],ans:[0]},
+{cat:"Kärnten",q:"Mit welchem Instrument wird Kärntner Lied begleitet?",opts:["Klavier","Gitarre","Flöte","mit keinem"],ans:[3]},
+{cat:"Kärnten",q:"Der bedeutendste Kärntner Maler des Mittelalters war…?",opts:["Albrecht Dürer","Egon Schiele","Thomas von Villach","Markus Pernhart"],ans:[2]},
+{cat:"Kärnten",q:"Wie lange leben deutsch- und slowenischsprachige Menschen schon gemeinsam und friedlich in Kärnten?",opts:["seit 100 Jahren","seit 60 Jahren","seit mehr als 1000 Jahren","seit 500 Jahren"],ans:[2]},
+{cat:"Kärnten",q:"Welcher Artikel des österreichischen Staatsvertrages regelt die Rechte der slowenischen Volksgruppe?",opts:["Artikel 37","Artikel 7","Artikel 9","Artikel 25"],ans:[1]},
+{cat:"Kärnten",q:"Wo gründete Bischof Modestus eine der ersten Kirchen Kärntens?",opts:["Ulrichsberg","Klagenfurt","Maria Saal","Gurk"],ans:[2]},
+{cat:"Kärnten",q:"Welcher Staat grenzt an Kärnten?",opts:["Deutschland","Italien","Kroatien","Slowenien"],ans:[1,3]},
+{cat:"Kärnten",q:"Welches österreichische Bundesland ist das älteste Herzogtum?",opts:["Kärnten","Tirol","Steiermark","Niederösterreich"],ans:[0]},
+{cat:"Kärnten",q:"Wie heißt der höchste Berg Österreichs?",opts:["Großglockner","Ötscher","Großvenediger","Zugspitze"],ans:[0]},
+{cat:"Kärnten",q:"Wie heißt der größte Badesee Kärntens?",opts:["Wörthersee","Weißensee","Traunsee","Walchsee"],ans:[0]},
+{cat:"Kärnten",q:"Wie heißt der bedeutendste Kärntner Herzog des Mittelalters?",opts:["Meinhard","Bernhard","Rudolf","Franz"],ans:[0]},
+{cat:"Kärnten",q:"In welchen Sprachen wird an den zweisprachigen Volksschulen in Kärnten unterrichtet?",opts:["Deutsch und Italienisch","Deutsch und Slowenisch","Deutsch und Englisch","Deutsch und Französisch"],ans:[1]},
+{cat:"Kärnten",q:"Welches Bundesland grenzt nicht an Kärnten?",opts:["Salzburg","Steiermark","Tirol","Wien"],ans:[3]},
+// ---- KÄRNTEN Teil 4 ----
+{cat:"Kärnten",q:"Wie viele Abgeordnete hat der Kärntner Landtag?",opts:["87","92","36","56"],ans:[2]},
+{cat:"Kärnten",q:"Welcher Kaiser erließ im Jahre 1781 das Toleranzgesetz?",opts:["Joseph II.","Leopold I.","Karl VI.","Leopold II."],ans:[0]},
+{cat:"Kärnten",q:"Wo fand der erste Teil der Herzogseinsetzung statt?",opts:["in der Burg Hochosterwitz","im Dom zu Klagenfurt","beim Fürstenstein in Karnburg","beim Herzogstuhl am Zollfeld"],ans:[2]},
+{cat:"Kärnten",q:"Wie hoch ist der Anteil des Waldes an der Gesamtfläche Kärntens?",opts:["mehr als 10 Prozent","mehr als 70 Prozent","mehr als 90 Prozent","mehr als 50 Prozent"],ans:[3]},
+{cat:"Kärnten",q:"Wie viele Gemeinden hat Kärnten?",opts:["78","132","97","225"],ans:[1]},
+{cat:"Kärnten",q:"Wie heißt die Römerstadt in der Nähe von Spittal an der Drau?",opts:["Teurnia","Lentia","Aquileia","Virunum"],ans:[0]},
+{cat:"Kärnten",q:"Wie nennt man den höchsten politischen Vertreter des Landes Kärnten?",opts:["Bürgermeister","Gouverneur","Präsident","Landeshauptmann"],ans:[3]},
+{cat:"Kärnten",q:"Wann gehörte Oberkärnten zu Frankreich?",opts:["1809 — 1815","1476 — 1500","1844 — 1850","1945 — 1955"],ans:[0]},
+{cat:"Kärnten",q:"Wo hält der Kärntner Landtag seine Sitzungen ab?",opts:["im Rathaus von Villach","im Landhaus in Klagenfurt","im Gemeindehaus in Klagenfurt","im Stadthaus von St. Veit"],ans:[1]},
+{cat:"Kärnten",q:"Wann wurde der Kärntner Landtag erstmals nach dem allgemeinen und gleichen Wahlrecht gewählt?",opts:["1921","1945","1948","1848"],ans:[0]},
+{cat:"Kärnten",q:"Was ist der \u201eJüngling vom Magdalensberg\u201c?",opts:["ein Schriftsteller","ein Sportler","eine antike Bronzestatue","ein bekannter Sänger"],ans:[2]},
+{cat:"Kärnten",q:"In Nötsch im Gailtal arbeiteten im 20. Jahrhundert zahlreiche Künstler. Diese waren…?",opts:["Tänzer","Maler","Sänger","Schriftsteller"],ans:[1]},
+{cat:"Kärnten",q:"Wie lautet die erste Zeile des Kärntner Heimatliedes?",opts:["Und breitet über Öst'reichs Haus","Dort wo Tirol an Salzburg grenzt","Geliebtes Vaterland im Süden","Wo durch der Matten herrlich Grün"],ans:[2]},
+{cat:"Kärnten",q:"Wo kreuzen sich die wichtigsten Autobahnen und Eisenbahnlinien Kärntens?",opts:["Wolfsberg","Ulrichsberg","Klagenfurt","Villach"],ans:[3]},
+{cat:"Kärnten",q:"Wo liegt der größte Kraftwerksspeicher Kärntens?",opts:["im Drautal","im Wolfsberg","im Maltatal","im Gailtal"],ans:[2]},
+// ---- KÄRNTEN Teil 5 ----
+{cat:"Kärnten",q:"Wie heißt der Landeshauptmann von Kärnten?",opts:["Peter Kaiser","Hans Huber","Jörg Haider","Julius Raab"],ans:[0]},
+{cat:"Kärnten",q:"Wer setzte den Kärntner Herzog im Mittelalter in sein Amt ein?",opts:["der Kaiser","ein Bischof","ein Lehrer","ein Bauer"],ans:[3]},
+{cat:"Kärnten",q:"Wie heißt das Parlament eines Bundeslandes?",opts:["Landtag","Länderrat","Gemeinderat","Bundesrat"],ans:[0]},
+{cat:"Kärnten",q:"Welcher Ort wird noch heute als alte Landeshauptstadt oder Herzogsstadt bezeichnet?",opts:["St. Veit","Klagenfurt","Spittal an der Drau","Villach"],ans:[0]},
+{cat:"Kärnten",q:"Wer wählt den Landeshauptmann?",opts:["er wird ernannt und nicht gewählt","die Mitglieder der Landesregierung","die Bürger","die Landtagsabgeordneten"],ans:[3]},
+{cat:"Kärnten",q:"Aus welcher Sprache stammt der Name Kärnten?",opts:["Slowenisch","Deutsch","Slawisch","Keltisch"],ans:[3]},
+{cat:"Kärnten",q:"Woraus wird Sterz hergestellt?",opts:["aus Mais","aus Buchweizen","aus Kartoffeln","aus Reis"],ans:[0,1]},
+{cat:"Kärnten",q:"Wie viele Einwohner hat Kärnten derzeit?",opts:["ca. 1.200.000","ca. 730.000","ca. 570.000","ca. 120.000"],ans:[1]},
+{cat:"Kärnten",q:"Wie heißt der Kärntner Landespatron?",opts:["Franz","Leopold","Rupert","Josef"],ans:[1]},
+{cat:"Kärnten",q:"Wer zählte ursprünglich nicht zu den Landständen in Kärnten?",opts:["hohe Geistliche","Ritter","Adel","Bauern"],ans:[3]},
+{cat:"Kärnten",q:"Wie heißt die bekannteste Kärntner Speise?",opts:["Sachertorte","Grißnockerlsuppe","Käsnudeln","Marillenknödel"],ans:[2]},
+{cat:"Kärnten",q:"Wann wurde die Bevölkerung zur Rückkehr zum katholischen Glauben gezwungen?",opts:["im Jahre 1814","im Jahre 1781","im Jahre 1918","im Jahre 1600"],ans:[3]},
+// ---- SALZBURG Teil 1 ----
+{cat:"Salzburg",q:"Die lokale Bahnlinie, die von der Stadt Salzburg ausgeht und den nördlichen Teil des politischen Bezirks Salzburg Umgebung erschließt, trägt die Bezeichnung: …?",opts:["Westbahn","Tauernbahn","Salzburger Lokalbahn","Nordbahn"],ans:[2]},
+{cat:"Salzburg",q:"Für Fragen in Zusammenhang mit Wohnen sowie finanziellen Förderungen ist in Salzburg die erste Anlaufstelle?",opts:["Die Landesregierung","Das Salzburger Institut für Raumordnung und Wohnen (SIR)","Die Wirtschaftskammer","Die Bezirkshauptmannschaft"],ans:[1]},
+{cat:"Salzburg",q:"Salzburg war über Jahrhunderte hinweg ein geistliches Fürstentum. Endgültig Teil Österreichs wurde es im Jahr …?",opts:["1867","1816","1492","1995"],ans:[1]},
+{cat:"Salzburg",q:"Welche Rufnummer muss gewählt werden, um im Notfall die Rettung zu erreichen?",opts:["8111","911","144","8042"],ans:[2]},
+{cat:"Salzburg",q:"Von wem wird ein internationales Avantgarde-Festival in Salzburg seit vielen Jahren während der Festspielzeit durchgeführt?",opts:["Neue Residenz","Szene Salzburg","ARGE Nonntal","Rockhouse"],ans:[1]},
+{cat:"Salzburg",q:"Während der NS-Diktatur von 1938-1945 wurde auf dem Gebiet von Salzburg ein großes Speicherkraftwerk begonnen. Es heißt: …?",opts:["Leobrunn","Silvretta","Hainburg","Kaprun"],ans:[3]},
+{cat:"Salzburg",q:"Die kürzeste Verbindung von der Stadt Salzburg in den Bezirk Zell am See führt über deutsches Staatsgebiet. Diese Straßenverbindung nennt man: …?",opts:["kleines deutsches Eck","großes Reichenhaller Feld","schmaler Zellweg","tiefer bayerischer Einschnitt"],ans:[0]},
+{cat:"Salzburg",q:"Welche große Burg, die von den Erzbischöfen errichtet wurde, dient heute als Anziehungspunkt für den Salzburger Fremdenverkehr?",opts:["Hohensalzburg","Hohenwerfen","Lichtenthann","Wartenfels"],ans:[0]},
+{cat:"Salzburg",q:"Beim Verlust der e-card wendet man sich an …?",opts:["den Bürgermeister","den Krankenversicherungsträger","die Feuerwehr","die Bezirkshauptmannschaft"],ans:[1]},
+{cat:"Salzburg",q:"Welche politischen Parteien sind zurzeit im Salzburger Landtag vertreten?",opts:["die Grünen, die SPÖ, die KPÖ","die SPÖ und die ÖVP","die FPÖ und die Grünen","die SPÖ, die ÖVP, die FPÖ, die NEOS und die Grünen"],ans:[3]},
+{cat:"Salzburg",q:"Wie heißen die zwei größten Städte des Landes Salzburg?",opts:["Radstadt und St. Johann im Pongau","Salzburg und Hallein","Neumarkt und Oberndorf","Zell am See und Hallein"],ans:[1]},
+{cat:"Salzburg",q:"Der größte österreichische Nationalpark, der 1971 gebildet wurde, trägt die Bezeichnung: …?",opts:["Nationalpark Kalkhochalpen","Nationalpark Hohe Tauern","Nationalpark Donauauen","Nationalpark Neusiedler See"],ans:[1]},
+{cat:"Salzburg",q:"Wann fanden in Salzburg die ersten allgemeinen, demokratischen Landtagswahlen statt, bei denen auch Frauen wahlberechtigt waren?",opts:["1904","1803","1919","1861"],ans:[2]},
+{cat:"Salzburg",q:"An welche Einrichtung kann man sich im Falle der Arbeitslosigkeit oder einem Jobwechsel wenden?",opts:["AMS (Arbeitsmarktservice)","Sozialabteilung des Landes","Salzburger Institut für Raumordnung und Wohnen","Magistrat Salzburg/Gemeindeamt"],ans:[0]},
+{cat:"Salzburg",q:"Wie heißt der Landeshauptmann von Salzburg?",opts:["Waltraud Klasnic","Barbara Prammer","Wilfried Haslauer","Klaus Rössler"],ans:[2]},
+// ---- SALZBURG Teil 2 ----
+{cat:"Salzburg",q:"Wie heißt das Landesparlament von Salzburg und wie viele Abgeordnete hat es?",opts:["Salzburger Nationalrat (183 Abgeordnete)","Salzburger Landtag (36 Abgeordnete)","Salzburger Oberste Kammer des Volkes (321 Abgeordnete)","Salzburger Volkskammer (269 Abgeordnete)"],ans:[1]},
+{cat:"Salzburg",q:"Was wurde am 1. Jänner 1997 in die UNESCO-Liste des Weltkulturerbes aufgenommen?",opts:["die Stadt Hallein","die Salzburger Altstadt","die Festung Hohenwerfen","die Semmeringbahn"],ans:[1]},
+{cat:"Salzburg",q:"Von den fünf Bezirken des Landes Salzburg liegt einer zum Großteil im Flachland. Es ist dies: …?",opts:["der Bezirk Hallein","der Bezirk Salzburg Umgebung","der Bezirk St. Johann im Pongau","der Bezirk Tamsweg"],ans:[1]},
+{cat:"Salzburg",q:"An der Spitze jeder Gemeinde steht ein …?",opts:["Ortskommandant","Bürgermeister","Bischof","Gemeindeleiter"],ans:[1]},
+{cat:"Salzburg",q:"Wer prägte in der zweiten Hälfte des 20. Jahrhunderts bis zu seinem Tod 1989 entscheidend die Salzburger Festspiele?",opts:["Tobias Reiser","Christian Kern","Karl Heinrich Waggerl","Herbert von Karajan"],ans:[3]},
+{cat:"Salzburg",q:"Welche beiden Bundesländer verbindet die 1935 eröffnete Großglockner Hochalpenstraße?",opts:["Oberösterreich und Steiermark","Salzburg und Kärnten","Tirol und Vorarlberg","Burgenland und Niederösterreich"],ans:[1]},
+{cat:"Salzburg",q:"Der größte Sakralbau, nach schwerer Beschädigung im Zweiten Weltkrieg 1959 neu eingeweiht, ist …?",opts:["der Salzburger Dom","die Stadtpfarrkirche von Zell am See","die Stadtpfarrkirche von Hallein","die Stadtpfarrkirche von Tamsweg"],ans:[0]},
+{cat:"Salzburg",q:"Welche Sportart hat eine besonders große Werbewirksamkeit für den Wintertourismus?",opts:["Eisstockschießen","Snowboarden","Eislaufen","Schifahren"],ans:[3]},
+{cat:"Salzburg",q:"Wo erhält ein/e österreichische/r Staatsbürger/in einen neuen Pass?",opts:["Salzburger Institut für Raumordnung und Wohnen","Außenministerium","Gemeinde oder Bezirkshauptmannschaft","Landesregierung"],ans:[2]},
+{cat:"Salzburg",q:"Welche ist die einwohnerreichste Stadt im Bundesland Salzburg?",opts:["Salzburg","Saalfelden am Steinernen Meer","St. Johann im Pongau","Hallein"],ans:[0]},
+{cat:"Salzburg",q:"Wie heißt das zentrale Krankenhaus des Landes, das sich in der Stadt Salzburg im Stadtteil Mülln befindet?",opts:["Krankenhaus Barmherzige Brüder","Diakonissen Krankenhaus","St. Johanns-Spital","St. Vinzenz-Spital"],ans:[2]},
+{cat:"Salzburg",q:"Wie heißt die freiwillige österreichische Interessenvertretung der ArbeitnehmerInnen?",opts:["Österreichischer Gewerkschaftsbund (ÖGB)","Industriellenvereinigung","Landwirtschaftskammer Salzburg","Wirtschaftskammer Österreich"],ans:[0]},
+{cat:"Salzburg",q:"Wie viele Einwohner hat das Bundesland Salzburg ungefähr (Stand 2024)?",opts:["ca. 100.000","ca. 1.000.000","ca. 800.000","ca. 570.000"],ans:[1]},
+{cat:"Salzburg",q:"Die weltweit berühmte musikalische Sommerveranstaltung in Salzburg trägt den Namen …?",opts:["Salzburger Festspiele","Salzburger Musiksommer","Salzburger Lichtspiele","Salzburger Festwochen"],ans:[0]},
+{cat:"Salzburg",q:"Zu den weltweit bekannten Wahrzeichen der Salzburger Altstadt gehört das Glockenspiel das 1704 fertig gestellt wurde. Seine Melodien hört man täglich am …?",opts:["Residenzplatz","Mirabellplatz","Getreidegasse","Südtirolerplatz"],ans:[0]},
+// ---- SALZBURG Teil 3 ----
+{cat:"Salzburg",q:"Wo finden Aufführungen des \u201eJedermann\u201c bei gutem Wetter seit 1920 statt?",opts:["auf dem Domplatz","im EM-Stadion Wals-Siezenheim","auf dem Makartplatz","auf dem Golfplatz"],ans:[0]},
+{cat:"Salzburg",q:"Das Salzburger Museum Carolino Augusteum zeigt seine Sammlungen seit 2006/07 in einem Palais am Residenzplatz. Wie heißt dieses Palais?",opts:["Neue Residenz","Antretterhaus","Schloss Mirabell","Festung Hohensalzburg"],ans:[0]},
+{cat:"Salzburg",q:"Ein Museum in Hallein enthält bedeutende Sammlungen zur prähistorischen Geschichte aus Ausgrabungen am Dürrnberg. Wie heißt es seit 1970?",opts:["Geschichtsmuseum Salzburg","Keltenmuseum Hallein","Tennengauer Kunstmuseum","Halleiner Stadtmuseum"],ans:[1]},
+{cat:"Salzburg",q:"Welches Bundesland ist durch den Katschbergtunnel mit Salzburg verbunden?",opts:["Steiermark","Vorarlberg","Burgenland","Kärnten"],ans:[3]},
+{cat:"Salzburg",q:"Wie häufig finden Landtagswahlen in Salzburg statt?",opts:["alle fünf Jahre","alle zehn Jahre","alle drei Jahre","jedes Jahr"],ans:[0]},
+{cat:"Salzburg",q:"Wie lautet die offizielle Bezeichnung des Salzburger Flughafens?",opts:["Stephan Burián Airport","Salzburg Airport W. A. Mozart","Blue Danube Airport","F. J. Strauß Airport"],ans:[1]},
+{cat:"Salzburg",q:"Welche zwei Bauwerke aus der Zwischenkriegszeit (1918–1939) sind große Salzburger Tourismusattraktionen?",opts:["EM-Stadion Wals-Siezenheim und Salzburg Arena","EM-Stadion Wals-Siezenheim und Schloss Hellbrunn","Großglockner Hochalpenstraße und Salzburger Festspielhaus","Schloss Hellbrunn und Schloss Leopoldskron"],ans:[2]},
+{cat:"Salzburg",q:"Welcher berühmte Komponist wurde 1756 in Salzburg geboren?",opts:["Anton Bruckner","Wolfgang Amadeus Mozart","Johann Strauß","Ludwig Abeille"],ans:[1]},
+// ---- TIROL Teil 1 ----
+{cat:"Tirol",q:"Durch welchen Tunnel gelangt man am besten von Nordtirol nach Osttirol?",opts:["Tauerntunnel","Katschbergtunnel","Felber-Tauern-Tunnel","Arlbergtunnel"],ans:[2]},
+{cat:"Tirol",q:"Wie viele Abgeordnete hat der Tiroler Landtag?",opts:["56","36","40","24"],ans:[1]},
+{cat:"Tirol",q:"Wo befindet sich das \u201eTirol-Büro\u201c der \u201eEuroregion Tirol\u201c?",opts:["Paris","Berlin","Genf","Brüssel"],ans:[3]},
+{cat:"Tirol",q:"Was waren große Probleme nach dem Krieg während der Besatzungszeit?",opts:["Energiemangel","Staus auf den Autobahnen","Nahrungsmittelknappheit","Diebstähle"],ans:[2]},
+{cat:"Tirol",q:"Welchem Musikgenre gehört \u201eZu Mantua in Banden\u201c an?",opts:["Volkslied","Popmusik","Landeshymne","Rock"],ans:[2]},
+{cat:"Tirol",q:"Wie heißt Tirols längster Fluss?",opts:["Drau","Salzach","Donau","Inn"],ans:[3]},
+{cat:"Tirol",q:"Welche historische Persönlichkeit wird in der Tiroler Landeshymne genannt?",opts:["Karl Schranz","Andreas Hofer","Eduard Wallnöfer","Hermann Gmeiner"],ans:[1]},
+{cat:"Tirol",q:"Welche wichtige Bildungseinrichtung wurde von Kaiser Leopold I. 1669 gegründet?",opts:["Innsbrucker Bibliothek","Innsbrucker Schwimmhalle","Universität Innsbruck","Stams Sportgymnasium"],ans:[2]},
+{cat:"Tirol",q:"Welche Sportanlage befindet sich heute am Bergisel?",opts:["Golfplatz","Tennisstadion","Fußballstadion","Skisprungschanze"],ans:[3]},
+{cat:"Tirol",q:"Wie lange war Tirol mit den Habsburger Territorien verbunden?",opts:["550 Jahre","620 Jahre","300 Jahre","700 Jahre"],ans:[1]},
+{cat:"Tirol",q:"Wie lange fließt der Inn durch Tirol?",opts:["417,9 km","313,4 km","109,1 km","212,3 km"],ans:[1]},
+{cat:"Tirol",q:"Tirol ist geographisch: …?",opts:["das fünftgrößte Bundesland","das drittgrößte Bundesland","das zweitgrößte Bundesland","das größte Bundesland"],ans:[2]},
+{cat:"Tirol",q:"Wie heißen die zwei Landespatrone Tirols?",opts:["Hl. Franz, Hl. Josef","Hl. Andreas, Hl. Josef","Hl. Josef, Hl. Georg","Hl. Franz, Hl. Erwin"],ans:[1]},
+{cat:"Tirol",q:"Welche Persönlichkeit (1963-1987) ist mit dem wirtschaftlichen Aufschwung Tirols verbunden?",opts:["Andreas Hofer","Eduard Wallnöfer","Herwig van Staa","Niki Lauda"],ans:[1]},
+{cat:"Tirol",q:"Welche zwei bedeutenden römischen Siedlungen entstanden im heutigen Tirol?",opts:["Aguntum, Veldidena","Innsbruck, Wattens","Innsbruck, Vindobona","Vindobona, Carnuntum"],ans:[0]},
+// ---- TIROL Teil 2 ----
+{cat:"Tirol",q:"Was wurde Tirol im Zuge seines wirtschaftlichen Aufschwungs 1955 — 1995?",opts:["Land der Landwirtschaft","Naturschutzgebiet","Industrieland Nr. 1","Fremdenverkehrsland Nr. 1"],ans:[3]},
+{cat:"Tirol",q:"Bei welchem Ereignis während des Nationalsozialismus starben in Innsbruck vier Menschen?",opts:["Demonstration","Reichskristallnacht","Bombenangriff","Erster Kriegstag"],ans:[1]},
+{cat:"Tirol",q:"An welche Bundesländer grenzt Tirol?",opts:["Vorarlberg, Salzburg, Kärnten","Vorarlberg, Oberösterreich, Salzburg","Vorarlberg, Kärnten, Steiermark","Salzburg, Niederösterreich, Steiermark"],ans:[0]},
+{cat:"Tirol",q:"Welche sportlichen Großereignisse wurden in Innsbruck 1964 und 1976 abgehalten?",opts:["Olympische Winterspiele","Olympische Sommerspiele","Weltmeisterschaften","Europameisterschaften"],ans:[0]},
+{cat:"Tirol",q:"Wo befindet sich das prächtige Grabmal Kaiser Maximilians I.?",opts:["Bergisel","Innsbrucker Universität","Innsbrucker Hofkirche","Goldenes Dachl"],ans:[2]},
+{cat:"Tirol",q:"Welche Gebiete gingen Tirol 1919 verloren?",opts:["Süd- und Osttirol","Südtirol, Kärnten","Osttirol, Jungholz","Slowenien, Südtirol"],ans:[0]},
+{cat:"Tirol",q:"Wo in Tirol waren die Schäden durch den Zweiten Weltkrieg besonders groß?",opts:["Rum","Wattens","Innsbruck und Umgebung","Kufstein"],ans:[2]},
+{cat:"Tirol",q:"Wie heißen die Landesfarben Tirols?",opts:["Weiß-Rot","Blau-Gelb","Grün-Weiß","Blau-Weiß"],ans:[0]},
+{cat:"Tirol",q:"Wie heißt die Landeshauptstadt von Tirol?",opts:["Klagenfurt","Going","Innsbruck","Wattens"],ans:[2]},
+{cat:"Tirol",q:"Wie heißt die Hauptstadt von Südtirol?",opts:["Corvara","Bozen","Meran","Lentia"],ans:[1]},
+{cat:"Tirol",q:"Welches Stift gründete Graf Meinhard II.?",opts:["Zwettl","Melk","Kufstein","Stams"],ans:[3]},
+{cat:"Tirol",q:"An welchem Schauplatz fand der Tiroler Freiheitskampf von 1809 statt?",opts:["Innsbrucker Innenstadt","Kufstein","Innsbrucker Bibliothek","Bergisel"],ans:[3]},
+{cat:"Tirol",q:"Welche Gebiete umfasste die französische Besatzungszone?",opts:["Südtirol, Nordtirol","Steiermark, Kärnten","Nordtirol, Vorarlberg","Innsbruck und Umgebung"],ans:[2]},
+{cat:"Tirol",q:"Wodurch wurde der Fremdenverkehr in Tirol während der Ersten Republik massiv geschädigt?",opts:["Bargeld-Sperre","Tausend-Mark-Sperre","Geschlossene Grenzen","Boykott-Aufruf"],ans:[1]},
+{cat:"Tirol",q:"Durch welches Ereignis ging in Tirol die Besatzung durch die Franzosen zu Ende?",opts:["Schenkung","Verordnung","Staatsvertrag","Handschlag"],ans:[2]},
+// ---- TIROL Teil 3 ----
+{cat:"Tirol",q:"Wie viele Einwohner hat Tirol derzeit?",opts:["ca. 391.000","ca. 775.000","ca. 560.000","ca. 853.000"],ans:[1]},
+{cat:"Tirol",q:"Auf welches Adelsgeschlecht geht das Wappen Tirols zurück?",opts:["Grafen von Meinhard","Grafen von Imst","Grafen von Monte Cristo","Grafen von Tirol"],ans:[3]},
+{cat:"Tirol",q:"Wo erreicht der Inn das Bundesland Tirol?",opts:["Finstermünz","Klagenfurt","Brenner","Innsbruck"],ans:[0]},
+{cat:"Tirol",q:"Der Großglockner (3798 m) steht an der Grenze zu welchem Bundesland?",opts:["Kärnten","Steiermark","Salzburg","Vorarlberg"],ans:[0]},
+{cat:"Tirol",q:"Wer führte den Tiroler Freiheitskampf von 1809 an?",opts:["Andreas Bach","Eduard Walböfer","Andreas Herzog","Andreas Hofer"],ans:[3]},
+{cat:"Tirol",q:"Was vermittelt der archäologische Freilichtpark Ötzidorf in Umhausen, Ötztal?",opts:["Eindruck der Zeitgeschichte","Eindruck der Eisenzeit","Eindruck der Jungsteinzeit","Eindruck des Realismuses"],ans:[2]},
+{cat:"Tirol",q:"Welcher Landesteil ging Tirol durch den Friedensvertrag von St. Germain am 10.9.1919 verloren?",opts:["Slowenien","Italien","Südtirol","Triest"],ans:[2]},
+{cat:"Tirol",q:"Welche Sehenswürdigkeit in Innsbruck zeigt Szenen der Bergisel-Schlachten von 1809?",opts:["Kristallwelten","Goldenes Dachl","Das Riesenrundgemälde","Eine Bronzeskulptur"],ans:[2]},
+{cat:"Tirol",q:"Wie hoch ist der Ausländeranteil an der Gesamtbevölkerung in Tirol?",opts:["50%","20%","10%","30%"],ans:[1]},
+{cat:"Tirol",q:"Wie heißt der Gründer des ersten SOS-Kinderdorfs 1949 in Imst?",opts:["Ludwik Rajman","Hermann Gmeiner","Eduard Wallnöfer","Herwig van Staa"],ans:[1]},
+{cat:"Tirol",q:"Was wurde von Landeshauptmann Eduard Wallnöfer ins Leben gerufen?",opts:["Arge Autobahn","Arge Hochbau","Arge Bau","Arge Alp"],ans:[3]},
+{cat:"Tirol",q:"Durch welches Abkommen ist seit 1997 der freie Personenverkehr zwischen Tirol und Südtirol möglich?",opts:["Wiener Abkommen","Vertrag von Versailles","Schengener Abkommen","Abkommen mit Südtirol"],ans:[2]},
+{cat:"Tirol",q:"Wann wurden in Tirol politische Gegner, Juden, Sinti und Roma besonders verfolgt?",opts:["Im Ersten Weltkrieg","Während der Römerzeit","Während der NS-Zeit","Während der 30er Jahre"],ans:[2]},
+{cat:"Tirol",q:"Wie heißt der höchste Berg in Nordtirol?",opts:["Großglockner","Zugspitze","Elmauer Tor","Wildspitze"],ans:[3]},
+{cat:"Tirol",q:"Wie heißt Tirols größter See?",opts:["Walchsee","Schwarzsee","Attersee","Achensee"],ans:[3]},
+// ---- TIROL Teil 4 ----
+{cat:"Tirol",q:"Was wurde Tirol im Zuge seines wirtschaftlichen Aufschwungs 1955 – 1995?",opts:["Industrieland Nr. 1","Bergbauland Nr. 1","Naturschutzgebiet","Fremdenverkehrsland Nr. 1"],ans:[3]},
+{cat:"Tirol",q:"In welcher Tiroler Gemeinde wird der Bürgermeister nicht direkt gewählt?",opts:["Hall in Tirol","Imst","Innsbruck","Kufstein"],ans:[2]},
+{cat:"Tirol",q:"Wie heißen die überlebensgroßen Bronzefiguren in der Innsbrucker Hofkirche?",opts:["Rote Mander","Grüne Mander","Gelde Mander","Schwarze Mander"],ans:[3]},
+{cat:"Tirol",q:"Wo liegt die Stamm- und Residenzburg der Grafen von Tirol?",opts:["Wilten","Meran","Bozen","Lienz"],ans:[1]},
+{cat:"Tirol",q:"An welchen Herrscher übergab Margarete Maultasch die Grafschaft Tirol 1363?",opts:["Rudolf V.","Rudolf VI.","Rudolf IV.","Rudolf I."],ans:[2]},
+{cat:"Tirol",q:"Ab welchem Alter ist man in Tirol zum Landtag wahlberechtigt?",opts:["Vollendung 18. Lebensjahr","Vollendung 15. Lebensjahr","Vollendung 17. Lebensjahr","Vollendung 16. Lebensjahr"],ans:[0]},
+{cat:"Tirol",q:"Welche ist die einwohnerreichste Stadt in Tirol?",opts:["Kitzbühel","Imst","Innsbruck","Kufstein"],ans:[2]},
+{cat:"Tirol",q:"Wie hießen die bewaffneten Wehrverbände in Tirol während der Ersten Republik?",opts:["Heimatfront","Heimatbund","Heimwehr","Heimatwehr"],ans:[2]},
+{cat:"Tirol",q:"Was gilt als Besonderheit in Tirol während der Ersten Republik?",opts:["Landschaft","Tiroler Käse","Tiroler Sportler","Tiroler Heimatwehr"],ans:[3]},
+{cat:"Tirol",q:"Welche politische Kraft gab es seit dem Spätmittelalter in Tirol neben dem Landesfürsten?",opts:["Landesregierung","Nationalrat","Landtag","Landesstände"],ans:[3]},
+{cat:"Tirol",q:"Welche Großereignisse wurden in Innsbruck 1964 und 1976 abgehalten?",opts:["Olympische Sommerspiele","Nordische Skiweltmeisterschaften","Olympische Winterspiele","Weltmeisterschaften"],ans:[2]},
+{cat:"Tirol",q:"Welcher Besatzungszone gehörte Osttirol nach dem Zweiten Weltkrieg an?",opts:["Amerikanische","Französische","Russische","Britische"],ans:[3]},
+{cat:"Tirol",q:"In welcher Form ist das Tiroler Schützenwesen noch heute präsent?",opts:["Durch Volkslieder","Durch Erzählungen","Durch Schützentreffen","Durch die Traditionsschützenkompanien"],ans:[3]},
+{cat:"Tirol",q:"Warum ist die Europaregion Tirol-Südtirol-Trentino bemüht?",opts:["Um gute Zusammenarbeit der seit 1918 geteilten Tiroler Länder","Um Hebung des Fremdenverkehrs","Um Bau von mehr Skiliften","Um Einführung gemeinsamer Regionalwährung"],ans:[0]},
+{cat:"Tirol",q:"Auf welches Adelsgeschlecht geht das Wappen Tirols zurück?",opts:["Grafen von Monte Cristo","Grafen von Meinhard","Grafen von Tirol","Grafen von Imst"],ans:[2]},
+{cat:"Tirol",q:"Wie heißt die nach der Einwohnerzahl kleinste Gemeinde Österreichs?",opts:["Grambach","Gramais","Gramatneusiedl","Gramastetten"],ans:[1]},
+{cat:"Tirol",q:"Wie nennt man die knapp über 5.000 Jahre alte Gletschermumie aus den Ötztaler Alpen?",opts:["Westi","Ötzi","Tiroli","Lusi"],ans:[1]},
+{cat:"Tirol",q:"Wie heißt das Wahrzeichen Innsbrucks?",opts:["Fußgängerzone","Silberner Zwettl","Goldenes Dachl","Bergiselschanze"],ans:[2]},
+// ---- VORARLBERG Teil 1 ----
+{cat:"Vorarlberg",q:"Aus welcher heute zu Italien gehörenden Region stammen viele Zuwanderer, die im 19. Jahrhundert nach Vorarlberg kamen?",opts:["Südtirol","Trentino","Umbrien","Venetien"],ans:[1]},
+{cat:"Vorarlberg",q:"Unter welchem Namen sind die Kinder bekannt, die noch bis ins frühe 20. Jh. im Sommer bei reichen Bauern in Schwaben arbeiten mussten?",opts:["Krauthobler","Schwabenkinder","Schweizerkinder","Hilfskinder"],ans:[1]},
+{cat:"Vorarlberg",q:"An welchen demokratischen Wahlen dürfen auch alle AusländerInnen (auch Nicht-EU-Bürger) teilnehmen?",opts:["Landtagswahlen","Nationalratswahl","Arbeiterkammerwahlen","Gemeinderatswahlen"],ans:[2]},
+{cat:"Vorarlberg",q:"Aus welchen Gründen hatte Vorarlberg lange Zeit nicht genug Ressourcen für die Ernährung seiner Bevölkerung?",opts:["weil zu viel exportiert wurde","weil das Rheintal und der Walgau immer wieder von Hochwasser überflutet wurden","weil es so viele Großgrundbesitzer gab","weil es keine \u201eRealteilung\u201c gab"],ans:[1]},
+{cat:"Vorarlberg",q:"Welche sind die Farben der Vorarlberger Landesfahne?",opts:["weiß-blau","weiß-grün","rot-weiß","rot-grün"],ans:[2]},
+{cat:"Vorarlberg",q:"Welches Abkommen führte zur Auswanderung von 75.000 Südtirolern?",opts:["das Juliabkommen","das Hitler-Mussolini-Abkommen","das Münchner Abkommen","der deutsch-sowjetische Nicht-Angriffspakt"],ans:[1]},
+{cat:"Vorarlberg",q:"Welche ist die häufigste Umgangssprache in Vorarlberg?",opts:["der bayrische Dialekt","der Tiroler Dialekt","der alemannische Dialekt","der wienerische Dialekt"],ans:[2]},
+{cat:"Vorarlberg",q:"Aus welchen Staaten kamen in den 50er- und 60er-Jahren des 20. Jh.s die meisten Gastarbeiter?",opts:["Kroatien, Zypern","Türkei, Jugoslawien","Ungarn, Ukraine","Ukraine, Türkei"],ans:[1]},
+{cat:"Vorarlberg",q:"Wie ist der Name \u201eVorarlberg\u201c entstanden?",opts:["aus den \u201eHerrschaften vor dem Arlberg\u201c","aus dem Vorsitz über die Bewohner des Arlbergs","aus der Vorgabe durch die Landesverfassung","aus dem Berg vor dem Arlberg"],ans:[0]},
+{cat:"Vorarlberg",q:"Welche Stadt Vorarlbergs hat im Zentrum ihren mittelalterlichen Kern bewahrt?",opts:["Bludenz","Altach","Feldkirch","Frastanz"],ans:[2]},
+{cat:"Vorarlberg",q:"Welche drei Staaten grenzen an Vorarlberg?",opts:["Deutschland, Italien, Lichtenstein","Deutschland, Schweiz, Italien","Deutschland, Schweiz, Liechtenstein","Schweiz, Italien, Liechtenstein"],ans:[2]},
+{cat:"Vorarlberg",q:"Wie heißt der Zusammenschluss von Bregenzerwälder Käseproduzenten, Wirten und Handwerkern?",opts:["Alma Käse","Bregenzerwälder Käsestraße","Bregenzerwälder Käsle","Rupp Käsle"],ans:[1]},
+{cat:"Vorarlberg",q:"Wie viele Einwohner hat Vorarlberg derzeit?",opts:["ca. 319.000","ca. 410.000","ca. 256.000","ca. 561.000"],ans:[1]},
+{cat:"Vorarlberg",q:"Wie heißt die Revolution, die in weiten Teilen Mitteleuropas im 19. Jh. gegen die Monarchien stattfand?",opts:["1867er Revolution","Arbeiterrevolution","1848er Revolution","Bauernrevolution"],ans:[2]},
+{cat:"Vorarlberg",q:"Welche ist die einwohnerreichste Stadt in Vorarlberg?",opts:["Lustenau","Feldkirch","Bregenz","Dornbirn"],ans:[3]},
+// ---- VORARLBERG Teil 2 ----
+{cat:"Vorarlberg",q:"Aus welchen österreichischen Bundesländern siedelten sich viele Zuwanderer in den 50er- und 60er-Jahren in Vorarlberg an?",opts:["Ober- und Niederösterreich","Wien und Salzburg","Salzburg und Tirol","Kärnten und Steiermark"],ans:[0]},
+{cat:"Vorarlberg",q:"Was stellt das Wappen von Vorarlberg dar?",opts:["Auf einem goldenen Schild sieht man das blaue Banner der Grafen Montfort, das am oberen Rande drei grüne Ringe trägt","Auf einem silbernen Schild sieht man das blaue Banner der Grafen Montfort, das am oberen Rande drei rote Ringe trägt","Auf einem goldenen Schild sieht man das grüne Banner der Grafen Montfort, das am oberen Rande drei grüne Ringe trägt","Auf einem silbernen Schild sieht man das rote Banner der Grafen Montfort, das am oberen Rande drei rote Ringe trägt"],ans:[1]},
+{cat:"Vorarlberg",q:"Was geschieht mit den meisten Waren, die von der Vorarlberger Industrie produziert werden?",opts:["Sie werden in viele Länder der Welt exportiert","Sie werden in Vorarlberg und Tirol verkauft","Sie werden nur nach Deutschland exportiert","Sie werden nur in Vorarlberg verkauft"],ans:[0]},
+{cat:"Vorarlberg",q:"Welche der folgenden Einrichtungen bietet Menschen in sozialer Not Hilfe und Beratung an?",opts:["Die grünen Engel","IfS (Institut für Sozialdienste) Vorarlberg","Die blaue Lagune","Institut für Katzen in Not"],ans:[1]},
+{cat:"Vorarlberg",q:"Welche Herrscherfamilie hat Vorarlberg in der Neuzeit zu einem politisch einheitlichen Gebiet zusammengeschlossen?",opts:["Die Habsburger","Die Babenberger","Die Welfen","Die Ottonen"],ans:[0]},
+{cat:"Vorarlberg",q:"Wo befindet sich der Sitz des Landtags, der Landesregierung und der Landesverwaltung?",opts:["Götzis","Feldkirch","Bregenz","Dornbirn"],ans:[2]},
+{cat:"Vorarlberg",q:"Welchen Stammesgruppen ist die heutige Mundart in Vorarlberg zu verdanken?",opts:["Gallier","Alemannen","Slawen","Baiern"],ans:[1]},
+{cat:"Vorarlberg",q:"Welcher Pass verbindet Vorarlberg und Tirol?",opts:["Arlbergpass","Plöckenpass","Pyhrnpass","Brennerpass"],ans:[0]},
+{cat:"Vorarlberg",q:"Wie nennt man die sommerliche Freilichtaufführung auf der Seebühne in Bregenz?",opts:["Freilicht Bregenz","Bregenzer Festspiele","Bregenzer Freilicht","Art Bregenz"],ans:[1]},
+{cat:"Vorarlberg",q:"Wo leben 80% der Vorarlberger Bevölkerung?",opts:["Im Großen und Kleinen Walsertal","Im Bregenzerwald","Im Rheintal und im Walgau","Im Höchst"],ans:[2]},
+{cat:"Vorarlberg",q:"Welches Gesetz des 18. Jh.s war für die Ausübung der Religionsfreiheit in Österreich wichtig?",opts:["Die Toleranzerweiterung","Das Toleranzpatent","Die Toleranzbulle","Das Toleranzedikt"],ans:[1]},
+{cat:"Vorarlberg",q:"Welche ist die erste in Vorarlberg gegründete Hochschule?",opts:["Pädagogische Hochschule Vorarlberg","Technische Universität Bregenz","Fachhochschule Vorarlberg","Universität Bregenz"],ans:[2]},
+{cat:"Vorarlberg",q:"In welcher Vorarlberger Stadt befindet sich das Landesgericht?",opts:["Dornbirn","Bregenz","Feldkirch","Bludenz"],ans:[2]},
+{cat:"Vorarlberg",q:"Wie heißt in Vorarlberg der Stellvertreter des Landeshauptmanns?",opts:["Landesvertreter","Landeskurator","Landeshauptmann-Stellvertreter","Landesstatthalter"],ans:[3]},
+{cat:"Vorarlberg",q:"Von welchem Nachbarland Österreichs übernahmen die Vorarlberger das beliebte Kartenspiel \u201eJassen\u201c?",opts:["Deutschland","Schweiz","Ungarn","Slowakei"],ans:[1]},
+// ---- VORARLBERG Teil 3 ----
+{cat:"Vorarlberg",q:"An welches Adelsgeschlecht erinnert das Wappen von Vorarlberg?",opts:["Die Habsburger","Die Grafen von Montfort","Die Grafen von Schwarzenberg","Die Fürsten von Liechtenstein"],ans:[1]},
+{cat:"Vorarlberg",q:"Wann wurde Vorarlberg zum selbstständigen Land erklärt und erhielt eine eigene Landesregierung?",opts:["1918","1818","1861","im 16. Jahrhundert"],ans:[0]},
+{cat:"Vorarlberg",q:"An welche Stelle können sich die Menschen in Vorarlberg wenden, wenn sie Diskriminierung erfahren haben?",opts:["an die Landesgleichstellungsstelle","an die Landesvolksanwaltschaft","an die Landesombudsstelle","an die Landesbeschwerdestelle"],ans:[1]},
+{cat:"Vorarlberg",q:"Welche politische Bewegung des 20. Jahrhunderts errichtete in Österreich ein Terrorregime?",opts:["spanische Monarchisten unter Franco","griechische Nationalisten","französische Gardisten","das NS-Regime unter Adolf Hitler"],ans:[3]},
+{cat:"Vorarlberg",q:"Wie nennt man die traditionelle Kleidung zu besonderen Anlässen?",opts:["Modetrend","Uniform","Tracht","Kostüm"],ans:[2]},
+{cat:"Vorarlberg",q:"Wie hieß der Verwaltungsbezirk, dem Vorarlberg 1938–1945 angehörte?",opts:["Reichsgau Oberarlberg","Reichsgau Hinterarlberg","Reichsgau Tirol und Vorarlberg","Reichsgau Oberinn"],ans:[2]},
+{cat:"Vorarlberg",q:"Wie heißt das Hochgebirge im Süden von Vorarlberg?",opts:["Großglockner","Silvretta","Zugspitze","Dachsteinmassiv"],ans:[1]},
+{cat:"Vorarlberg",q:"Welche ist eine traditionsreiche Leistungsschau der Vorarlberger Wirtschaft?",opts:["Bregenzer Festspiele","Feldkircher Handwerksmesse","Montafoner Gewerbemesse","die Messe Dornbirn"],ans:[3]},
+{cat:"Vorarlberg",q:"Welcher Industriezweig war für Vorarlbergs Industrialisierung besonders wichtig?",opts:["Holzverarbeitung","Lebensmittelindustrie","Die Textilindustrie","Maschinenbau"],ans:[2]},
+{cat:"Vorarlberg",q:"Wie hieß Bregenz zur Zeit der Römer?",opts:["Vindobona","Brigantium","Iuvavum","Lentia"],ans:[1]},
+{cat:"Vorarlberg",q:"Wie hießen die christlichen Missionare des 7. Jh. um den Bodensee?",opts:["Kolumban und Gallus","Kilian und Totnan","Rupertus und Virgil","Korbinian und Emmeram"],ans:[0]},
+{cat:"Demokratie",q:"Wann wurde die Europäische Menschenrechtskonvention in Österreich in den Verfassungsrang gehoben?",opts:["1964","1995","1918","1959"],ans:[0]},
+{cat:"Demokratie",q:"Was ist ein Diktator?",opts:["Alleinherrscher","Parteimitglied","Bundestagsabgeordneter","Volksvertreter"],ans:[0]},
+{cat:"Demokratie",q:"Aufgaben des Nationalrates sind:",opts:["Prüfung der Regierungsarbeit","Bildung der Bundesregierung","Vertretung der Interessen der Bundesländer","Beratung und Beschluss der Bundesgesetze"],ans:[0,3]},
+{cat:"Demokratie",q:"Wann wurde die EU gegründet?",opts:["1955","1992","1995","1945"],ans:[1]},
+{cat:"Demokratie",q:"Welche Funktion hat ein Landeshauptmann?",opts:["Vorsitzender der Bundesregierung","Vorsitzender des Nationalrats","Vorsitzender der Landesregierung","Vorsitzender des Bundesrats"],ans:[2]},
+{cat:"Demokratie",q:"Wofür ist die Gemeinde zuständig?",opts:["Gemeindestraßen","Gerichtsbarkeit","Gemeindefinanzierung","Landesverteidigung"],ans:[0,2]},
+{cat:"Demokratie",q:"Was kennzeichnet die Menschenwürde?",opts:["Alle Menschen sind gleich viel wert","Alle Menschen haben Rechte, die niemand nehmen darf","Abhängig von der Staatsbürgerschaft","Abhängig vom Alter"],ans:[0,1]},
+{cat:"Demokratie",q:"Welche ist eine der vier Grundfreiheiten der EU?",opts:["Erweiterung der EU","Naturschutz","Tierschutz","freier Personenverkehr"],ans:[3]},
+{cat:"Demokratie",q:"Was sind Institutionen der EU?",opts:["Europäisches Parlament","Europäische Kommission","Oberster Gerichtshof","Verfassungsgerichtshof"],ans:[0,1]},
+{cat:"Demokratie",q:"Durch wen erfolgt die Rechtsprechung?",opts:["Richter","Pflichtverteidiger","Staatsanwälte","Notare"],ans:[0]},
+{cat:"Demokratie",q:"Nennen Sie Voraussetzungen für die Verleihung der Staatsbürgerschaft:",opts:["Grundbesitz","keine gerichtlichen Verurteilungen","Annahme des katholischen Glaubens","gesicherter Lebensunterhalt"],ans:[1,3]},
+{cat:"Demokratie",q:"Wer beschließt ein Bundesgesetz?",opts:["Landtag und Gemeinde","Nationalrat und Bundesrat","Bundespräsident","Bundeskanzler"],ans:[1]},
+{cat:"Demokratie",q:"Was ist eine Funktion des Bundesrates?",opts:["vertritt die Interessen des Bundes","vertritt die Interessen der Länder bei der Bundesgesetzgebung","vertritt die Interessen der Bezirke","vertritt die Interessen der Gemeinden"],ans:[1]},
+];
+
+// ============================================================
+// LOCAL STORAGE
+// ============================================================
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem('quizHistory') || '[]'); } catch(e) { return []; }
+}
+function saveHistory(entry) {
+  const h = loadHistory();
+  h.unshift(entry);
+  if(h.length > 50) h.length = 50;
+  localStorage.setItem('quizHistory', JSON.stringify(h));
+}
+function loadWrongBank() {
+  try { return JSON.parse(localStorage.getItem('wrongBank') || '[]'); } catch(e) { return []; }
+}
+function saveWrongBank(bank) {
+  localStorage.setItem('wrongBank', JSON.stringify(bank));
+}
+function updateWrongBank(questions, answers) {
+  const bank = loadWrongBank();
+  answers.forEach(a => {
+    const q = questions[a.qIdx];
+    if(!q) return;
+    const idx = bank.findIndex(b => b.q === q.q);
+    if(a.status === 'correct') {
+      if(idx > -1) bank.splice(idx, 1);
+    } else {
+      if(idx > -1) { bank[idx].wrongCount++; bank[idx].lastWrong = new Date().toISOString(); }
+      else bank.push({ cat:q.cat, q:q.q, opts:q.opts, ans:q.ans, wrongCount:1, lastWrong:new Date().toISOString() });
+    }
+  });
+  saveWrongBank(bank);
+}
+
+// ============================================================
+// SCORING
+// ============================================================
+// Returns { status: 'correct'|'partial'|'wrong', points: 0|1 }
+// Partial = multi-answer question, some correct answers selected, NO wrong answers selected
+// Per exam rules: partial counts as 1 point ("teilweise richtig gewertet, sofern keine falsche Auswahlmöglichkeit")
+function evaluateAnswer(q, selected) {
+  if(selected.length === 0) return { status:'wrong', points:0 };
+  const hasWrong = selected.some(s => !q.ans.includes(s));
+  if(hasWrong) return { status:'wrong', points:0 };
+  const allCorrect = q.ans.every(a => selected.includes(a));
+  if(allCorrect) return { status:'correct', points:1 };
+  if(q.ans.length > 1) return { status:'partial', points:1 }; // partial credit
+  return { status:'wrong', points:0 };
+}
+
+// Exam pass rules:
+// Pass if totalScore >= 12 OR (>= 50% in EACH topic = >= 3/6 per topic)
+function calculateExamResult(answers, questions, bundesland) {
+  const cats = ['Geschichte', 'Demokratie', bundesland];
+  const topicScores = {};
+  let totalScore = 0;
+  cats.forEach(cat => {
+    const pts = answers
+      .filter(a => questions[a.qIdx] && questions[a.qIdx].cat === cat)
+      .reduce((s,a) => s + a.points, 0);
+    topicScores[cat] = { score:pts, total:6, pct:pts/6 };
+    totalScore += pts;
+  });
+  const passBy12 = totalScore >= 12;
+  const passBy50pct = cats.every(cat => topicScores[cat].pct >= 0.5);
+  return { totalScore, topicScores, passed: passBy12 || passBy50pct, passBy12, passBy50pct, cats };
+}
+
+// ============================================================
+// APP STATE
+// ============================================================
+let state = {
+  screen: 'home', // home, quiz, results, history, historyDetail
+  selectedCats: [],
+  mode: 'all', // all, shuffle, exam, review
+  examBundesland: 'Wien', // which Bundesland topic to use in exam mode
+  questions: [],
+  currentQ: 0,
+  selected: [],
+  answered: false,
+  score: 0,
+  answers: [], // {qIdx, selected, status, points}
+  examResult: null,
+  historyItem: null,
+};
+
+function shuffle(arr) {
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function startQuiz() {
+  let qs;
+  if(state.mode === 'exam') {
+    // 6 random from Geschichte + Demokratie + chosen Bundesland, then shuffle all 18
+    const cats = ['Geschichte', 'Demokratie', state.examBundesland];
+    qs = shuffle(cats.flatMap(cat =>
+      shuffle(ALL_QUESTIONS.filter(q => q.cat === cat)).slice(0, 6)
+    ));
+  } else if(state.mode === 'review') {
+    qs = shuffle(loadWrongBank());
+    if(qs.length === 0) { alert('Noch keine falsch beantworteten Fragen gespeichert!'); return; }
+  } else {
+    qs = ALL_QUESTIONS.filter(q => state.selectedCats.includes(q.cat));
+    if(state.mode === 'shuffle') qs = shuffle(qs);
+  }
+  state.questions = qs;
+  state.currentQ = 0; state.selected = []; state.answered = false;
+  state.score = 0; state.answers = []; state.examResult = null;
+  state.screen = 'quiz';
+  render();
+}
+
+function startExam() { state.mode = 'exam'; startQuiz(); }
+function setExamBundesland(bl) { state.examBundesland = bl; render(); }
+
+function startReview() {
+  const bank = loadWrongBank();
+  if(bank.length === 0) { alert('Noch keine falsch beantworteten Fragen gespeichert!'); return; }
+  state.mode = 'review'; startQuiz();
+}
+
+function toggleOption(idx) {
+  if(state.answered) return;
+  const i = state.selected.indexOf(idx);
+  if(i>-1) state.selected.splice(i,1); else state.selected.push(idx);
+  render();
+}
+
+function checkAnswer() {
+  const q = state.questions[state.currentQ];
+  const result = evaluateAnswer(q, state.selected);
+  state.score += result.points;
+  state.answers.push({ qIdx:state.currentQ, selected:[...state.selected], status:result.status, points:result.points });
+  state.answered = true;
+  render();
+}
+
+function nextQuestion() {
+  state.currentQ++;
+  state.selected = []; state.answered = false;
+  if(state.currentQ >= state.questions.length) {
+    if(state.mode === 'exam') state.examResult = calculateExamResult(state.answers, state.questions, state.examBundesland);
+    saveHistory({
+      id: Date.now(),
+      date: new Date().toISOString(),
+      mode: state.mode,
+      cats: state.mode === 'exam' ? ['Wien','Geschichte','Demokratie'] : [...state.selectedCats],
+      total: state.questions.length,
+      score: state.score,
+      examResult: state.examResult,
+      questions: state.questions.map(q => ({ cat:q.cat, q:q.q, opts:q.opts, ans:q.ans })),
+      answers: state.answers,
+    });
+    updateWrongBank(state.questions, state.answers);
+    state.screen = 'results';
+  }
+  render();
+}
+
+function goHome() { state.screen = 'home'; render(); }
+function showHistory() { state.screen = 'history'; render(); }
+function showHistoryDetail(id) {
+  state.historyItem = loadHistory().find(h => h.id === id) || null;
+  state.screen = 'historyDetail';
+  render();
+}
+function clearHistory() { localStorage.removeItem('quizHistory'); }
+function clearWrongBank() { localStorage.removeItem('wrongBank'); render(); }
+
+function getCatClass(cat) {
+  if(cat==='Wien') return 'wien';
+  if(cat==='Geschichte') return 'geschichte';
+  if(cat==='Demokratie') return 'demokratie';
+  return 'bundesland';
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function render() {
+  const app = document.getElementById('app');
+  if(state.screen==='home') app.innerHTML = renderHome();
+  else if(state.screen==='quiz') app.innerHTML = renderQuiz();
+  else if(state.screen==='results') app.innerHTML = renderResults();
+  else if(state.screen==='history') app.innerHTML = renderHistory();
+  else app.innerHTML = renderHistoryDetail();
+}
+
+const BUNDESLAENDER = ['Niederösterreich','Burgenland','Oberösterreich','Steiermark','Kärnten','Salzburg','Tirol','Vorarlberg'];
+
+function renderHome() {
+  const wienCount = ALL_QUESTIONS.filter(q=>q.cat==='Wien').length;
+  const geschCount = ALL_QUESTIONS.filter(q=>q.cat==='Geschichte').length;
+  const demoCount = ALL_QUESTIONS.filter(q=>q.cat==='Demokratie').length;
+  const total = state.selectedCats.reduce((s,c) => s + ALL_QUESTIONS.filter(q=>q.cat===c).length, 0);
+  const wrongBank = loadWrongBank();
+  const history = loadHistory();
+
+  const blCards = BUNDESLAENDER.map(bl => {
+    const cnt = ALL_QUESTIONS.filter(q=>q.cat===bl).length;
+    const flag = {Niederösterreich:'🏰',Burgenland:'🌻',Oberösterreich:'⛵',Steiermark:'🌿',Kärnten:'🏔️',Salzburg:'🎵',Tirol:'🦅',Vorarlberg:'🏔️'}[bl]||'🗺️';
+    return `<div class="cat-card ${state.selectedCats.includes(bl)?'active':''}" onclick="toggleCat('${bl}')">
+      <div class="cat-icon bundesland">${flag}</div>
+      <div class="cat-info"><h3>${bl}</h3><p>Bundesland-Fragen</p></div>
+      <span class="cat-badge bundesland">${cnt} Fragen</span>
+    </div>`;
+  }).join('');
+
+  return `
+    <h1>Staatsbürgerschaftsprüfung Österreich</h1>
+    <p class="subtitle">Übungstest · Alle Fragen von <a href="https://staatsbuergerschaft.com/" target="_blank">staatsbuergerschaft.com</a></p>
+
+    <div class="exam-banner" onclick="startExam()">
+      <div class="exam-banner-icon">🎓</div>
+      <div style="flex:1;">
+        <div class="exam-banner-title">Prüfungssimulation</div>
+        <div class="exam-banner-sub">Geschichte + Demokratie + Bundesland · 18 Fragen · Offizielle Bestehensbedingungen</div>
+        <div style="margin-top:8px;" onclick="event.stopPropagation()">
+          <select onchange="setExamBundesland(this.value)" style="background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:4px 8px;font-size:0.85rem;font-family:inherit;cursor:pointer;">
+            ${['Wien','Niederösterreich','Burgenland','Oberösterreich','Steiermark','Kärnten','Salzburg','Tirol','Vorarlberg'].map(bl =>
+              `<option value="${bl}" ${state.examBundesland===bl?'selected':''}>${bl}</option>`
+            ).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="exam-banner-arrow">→</div>
+    </div>
+
+    <div style="font-size:0.85rem;color:var(--text-dim);margin-bottom:10px;">Themen zum freien Üben wählen:</div>
+    <div style="font-size:0.78rem;color:var(--text-dim);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Pflichtthemen (alle Bundesländer)</div>
+    <div class="categories">
+      <div class="cat-card ${state.selectedCats.includes('Wien')?'active':''}" onclick="toggleCat('Wien')">
+        <div class="cat-icon wien">🏛️</div>
+        <div class="cat-info"><h3>Wien</h3><p>Fragen über Wien</p></div>
+        <span class="cat-badge wien">${wienCount} Fragen</span>
+      </div>
+      <div class="cat-card ${state.selectedCats.includes('Geschichte')?'active':''}" onclick="toggleCat('Geschichte')">
+        <div class="cat-icon geschichte">📜</div>
+        <div class="cat-info"><h3>Geschichte</h3><p>Geschichte Österreichs</p></div>
+        <span class="cat-badge geschichte">${geschCount} Fragen</span>
+      </div>
+      <div class="cat-card ${state.selectedCats.includes('Demokratie')?'active':''}" onclick="toggleCat('Demokratie')">
+        <div class="cat-icon demokratie">⚖️</div>
+        <div class="cat-info"><h3>Demokratie</h3><p>Demokratie Österreichs</p></div>
+        <span class="cat-badge demokratie">${demoCount} Fragen</span>
+      </div>
+    </div>
+
+    <div style="font-size:0.78rem;color:var(--text-dim);margin-bottom:8px;margin-top:16px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Bundesländer-Fragen</div>
+    <div class="categories">${blCards}</div>
+
+    <div class="modes">
+      <button class="mode-btn ${state.mode==='all'?'active':''}" onclick="setMode('all')">📋 Der Reihe nach</button>
+      <button class="mode-btn ${state.mode==='shuffle'?'active':''}" onclick="setMode('shuffle')">🔀 Zufällig gemischt</button>
+    </div>
+
+    <div class="btn-row" style="justify-content:center">
+      <button class="btn btn-primary" ${state.selectedCats.length===0?'disabled':''} onclick="startQuiz()" style="font-size:1.05rem;padding:14px 36px;">
+        Übungstest starten · ${total} Fragen
+      </button>
+    </div>
+
+    ${wrongBank.length > 0 ? `
+    <div class="wrong-bank-card" onclick="startReview()">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="font-size:1.5rem;">📚</div>
+        <div style="flex:1;">
+          <div style="font-weight:600;margin-bottom:2px;">Fehler-Training</div>
+          <div style="font-size:0.82rem;color:var(--text-dim);">${wrongBank.length} Fragen aus früheren Tests zum Nachlernen</div>
+        </div>
+        <button class="btn btn-secondary" style="padding:6px 12px;font-size:0.8rem;" onclick="event.stopPropagation();if(confirm('Fehlerspeicher löschen?')){clearWrongBank();}">✕</button>
+        <span style="color:var(--gold);">→</span>
+      </div>
+    </div>` : ''}
+
+    ${history.length > 0 ? `
+    <div style="margin-top:16px;">
+      <button class="btn btn-secondary" onclick="showHistory()" style="width:100%;">📊 Testergebnisse ansehen (${history.length})</button>
+    </div>` : ''}
+  `;
+}
+
+function renderQuiz() {
+  const q = state.questions[state.currentQ];
+  const catClass = getCatClass(q.cat);
+  const isMulti = q.ans.length > 1;
+  const pct = (state.currentQ / state.questions.length * 100);
+
+  let optsHTML = q.opts.map((opt,i) => {
+    let cls = 'option';
+    if(state.answered) {
+      cls += ' disabled';
+      if(state.selected.includes(i) && q.ans.includes(i)) cls += ' correct';
+      else if(state.selected.includes(i) && !q.ans.includes(i)) cls += ' wrong';
+      else if(!state.selected.includes(i) && q.ans.includes(i)) cls += ' correct-missed';
+    } else {
+      if(state.selected.includes(i)) cls += ' selected';
+    }
+    return `<div class="${cls}" onclick="toggleOption(${i})">
+      <span class="check"></span>
+      <span>${opt}</span>
+    </div>`;
+  }).join('');
+
+  let statusBadge = '';
+  if(state.answered) {
+    const ev = evaluateAnswer(q, state.selected);
+    if(ev.status === 'correct') statusBadge = `<div class="answer-status correct-status">✓ Richtig – 1 Punkt</div>`;
+    else if(ev.status === 'partial') statusBadge = `<div class="answer-status partial-status">◐ Teilweise richtig – 1 Punkt (keine falsche Auswahl getroffen)</div>`;
+    else statusBadge = `<div class="answer-status wrong-status">✗ Falsch – 0 Punkte</div>`;
+  }
+
+  const modeTag = state.mode === 'exam'
+    ? ` <span style="color:var(--gold);font-weight:600;">🎓 Prüfung</span>`
+    : state.mode === 'review'
+    ? ` <span style="color:var(--gold);font-weight:600;">📚 Wiederholung</span>`
+    : '';
+
+  return `
+    <div class="progress-text">
+      <span>Frage ${state.currentQ+1} von ${state.questions.length}${modeTag}</span>
+      <span>${state.score} Punkte</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+
+    <div class="question-card">
+      <span class="q-category ${catClass}">${q.cat}</span>
+      ${isMulti ? '<div class="q-multi-hint">⚠ Mehrere Antworten möglich!</div>' : ''}
+      <div class="q-text">${q.q}</div>
+      <div class="options">${optsHTML}</div>
+      ${statusBadge}
+    </div>
+
+    <div class="btn-row">
+      ${!state.answered
+        ? `<button class="btn btn-primary" ${state.selected.length===0?'disabled':''} onclick="checkAnswer()">Prüfen</button>`
+        : `<button class="btn btn-primary" onclick="nextQuestion()">${state.currentQ < state.questions.length-1 ? 'Nächste Frage →' : 'Ergebnis anzeigen'}</button>`}
+      <button class="btn btn-secondary" onclick="goHome()">← Zurück</button>
+    </div>
+  `;
+}
+
+function renderResults() {
+  const total = state.questions.length;
+  const wrongCount = state.answers.filter(a => a.status === 'wrong').length;
+  const partialCount = state.answers.filter(a => a.status === 'partial').length;
+  const correctCount = state.answers.filter(a => a.status === 'correct').length;
+
+  let mainHTML = '';
+
+  if(state.mode === 'exam' && state.examResult) {
+    const r = state.examResult;
+    const color = r.passed ? 'var(--correct)' : 'var(--wrong)';
+    const circumference = 2 * Math.PI * 58;
+    const offset = circumference - (r.totalScore / 18) * circumference;
+
+    const topicRows = (r.cats || ['Geschichte','Demokratie', state.examBundesland]).map(cat => {
+      const ts = r.topicScores[cat];
+      if(!ts) return '';
+      const catPassed = ts.pct >= 0.5;
+      return `<div class="topic-score-row">
+        <span class="q-category ${getCatClass(cat)}" style="font-size:0.7rem;min-width:82px;">${cat}</span>
+        <div class="topic-score-bar-wrap">
+          <div class="topic-score-bar" style="width:${ts.pct*100}%;background:${catPassed?'var(--correct)':'var(--wrong)'}"></div>
+        </div>
+        <span style="color:${catPassed?'var(--correct)':'var(--wrong)'};font-weight:600;min-width:46px;text-align:right;">${ts.score}/6 ${catPassed?'✓':'✗'}</span>
+      </div>`;
+    }).join('');
+
+    mainHTML = `<div class="results-card">
+      <div class="score-circle">
+        <svg viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="58" fill="none" stroke="var(--border)" stroke-width="6"/>
+          <circle cx="65" cy="65" r="58" fill="none" stroke="${color}" stroke-width="6"
+            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+            stroke-linecap="round" transform="rotate(-90 65 65)" style="transition:stroke-dashoffset 1s ease"/>
+        </svg>
+        <span class="score-num" style="color:${color}">${r.totalScore}/18</span>
+        <span class="score-label">Punkte</span>
+      </div>
+      <div class="results-title" style="color:${color}">${r.passed ? '🎉 Bestanden!' : '✗ Nicht bestanden'}</div>
+      <p class="results-sub">${r.passed
+        ? (r.passBy12 ? 'Du hast ≥ 12 Punkte erreicht.' : 'Du hast ≥ 50 % in jedem Teilgebiet erreicht.')
+        : 'Notwendig: ≥ 12 Punkte gesamt ODER ≥ 3/6 (50 %) in jedem Teilgebiet.'}</p>
+      <div class="topic-scores-section">${topicRows}</div>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-num green">${correctCount}</div><div class="stat-label">Richtig</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--gold)">${partialCount}</div><div class="stat-label">Teilweise</div></div>
+        <div class="stat"><div class="stat-num red">${wrongCount}</div><div class="stat-label">Falsch</div></div>
+      </div>
+      <div class="btn-row" style="justify-content:center">
+        <button class="btn btn-primary" onclick="startExam()">🔄 Neue Prüfung</button>
+        <button class="btn btn-secondary" onclick="goHome()">← Startseite</button>
+      </div>
+    </div>`;
+  } else {
+    const pct = Math.round(state.score / total * 100);
+    const passed = pct >= 50;
+    const circumference = 2 * Math.PI * 58;
+    const offset = circumference - (pct / 100) * circumference;
+    const color = passed ? 'var(--correct)' : 'var(--wrong)';
+    const grade = pct >= 90 ? 'Ausgezeichnet! 🎉' : pct >= 75 ? 'Sehr gut! 👏' : pct >= 50 ? 'Bestanden! ✓' : 'Weiter üben! 📚';
+
+    mainHTML = `<div class="results-card">
+      <div class="score-circle">
+        <svg viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="58" fill="none" stroke="var(--border)" stroke-width="6"/>
+          <circle cx="65" cy="65" r="58" fill="none" stroke="${color}" stroke-width="6"
+            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+            stroke-linecap="round" transform="rotate(-90 65 65)" style="transition:stroke-dashoffset 1s ease"/>
+        </svg>
+        <span class="score-num" style="color:${color}">${pct}%</span>
+        <span class="score-label">${state.score}/${total}</span>
+      </div>
+      <div class="results-title">${grade}</div>
+      <p class="results-sub">${passed ? 'Du hast den Übungstest gut abgeschlossen!' : 'Du brauchst mindestens 50 % zum Bestehen.'}</p>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-num green">${correctCount}</div><div class="stat-label">Richtig</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--gold)">${partialCount}</div><div class="stat-label">Teilweise</div></div>
+        <div class="stat"><div class="stat-num red">${wrongCount}</div><div class="stat-label">Falsch</div></div>
+        <div class="stat"><div class="stat-num">${total}</div><div class="stat-label">Gesamt</div></div>
+      </div>
+      <div class="btn-row" style="justify-content:center">
+        <button class="btn btn-primary" onclick="startQuiz()">🔄 Nochmal</button>
+        <button class="btn btn-secondary" onclick="goHome()">← Startseite</button>
+      </div>
+    </div>`;
+  }
+
+  // Review section for wrong/partial answers
+  const reviewItems = state.answers.filter(a => a.status !== 'correct').map(a => {
+    const q = state.questions[a.qIdx];
+    const correctOpts = q.ans.map(i => `<div class="review-answer correct-ans">✓ ${q.opts[i]}</div>`).join('');
+    const wrongOpts = a.selected.filter(s => !q.ans.includes(s)).map(s => `<div class="review-answer wrong-ans">✗ ${q.opts[s]}</div>`).join('');
+    const missedOpts = q.ans.filter(i => !a.selected.includes(i)).map(i => `<div class="review-answer missed-ans">↳ vergessen: ${q.opts[i]}</div>`).join('');
+    const statusTag = a.status === 'partial' ? '<span style="color:var(--gold);font-size:0.75rem;font-weight:500;"> – teilweise richtig</span>' : '';
+    return `<div class="review-item">
+      <div class="review-q"><span class="q-category ${getCatClass(q.cat)}" style="margin-right:8px;font-size:0.7rem;">${q.cat}</span>${q.q}${statusTag}</div>
+      ${correctOpts}${wrongOpts}${missedOpts}
+    </div>`;
+  }).join('');
+
+  return mainHTML + (reviewItems
+    ? `<h3 style="font-family:'DM Serif Display',serif;margin:24px 0 14px;font-size:1.2rem;">Zum Nachlernen:</h3>${reviewItems}`
+    : '');
+}
+
+function renderHistory() {
+  const history = loadHistory();
+  if(history.length === 0) return `
+    <h1 style="font-size:1.8rem;margin-bottom:20px;">Testergebnisse</h1>
+    <div class="results-card" style="text-align:center;">
+      <p style="color:var(--text-dim);margin-bottom:20px;">Noch keine Tests absolviert.</p>
+      <button class="btn btn-secondary" onclick="goHome()">← Zurück</button>
+    </div>`;
+
+  const modeLabels = { exam:'🎓 Prüfungssimulation', all:'📋 Übungstest', shuffle:'🔀 Zufälliger Test', review:'📚 Wiederholung' };
+
+  const items = history.map(h => {
+    const d = new Date(h.date);
+    const ds = d.toLocaleDateString('de-AT',{day:'2-digit',month:'2-digit',year:'numeric'})
+             + ' · ' + d.toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'});
+    const label = modeLabels[h.mode] || h.mode;
+    let badgeHTML = '';
+    if(h.mode === 'exam' && h.examResult) {
+      badgeHTML = `<span class="hist-badge ${h.examResult.passed?'pass':'fail'}">${h.examResult.passed?'Bestanden':'Nicht bestanden'}</span>`;
+    } else {
+      const pct = Math.round(h.score / h.total * 100);
+      badgeHTML = `<span style="color:var(--text-dim);font-size:0.85rem;">${h.score}/${h.total} · ${pct}%</span>`;
+    }
+    return `<div class="hist-item" onclick="showHistoryDetail(${h.id})">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:600;margin-bottom:2px;">${label}</div>
+          <div style="font-size:0.82rem;color:var(--text-dim);">${ds} · ${h.total} Fragen</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">${badgeHTML}<span style="color:var(--text-dim);">›</span></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `
+    <h1 style="font-size:1.8rem;margin-bottom:8px;">Testergebnisse</h1>
+    <p style="color:var(--text-dim);font-size:0.85rem;margin-bottom:20px;">${history.length} gespeicherte Tests</p>
+    ${items}
+    <div class="btn-row" style="justify-content:center;margin-top:20px;">
+      <button class="btn btn-secondary" onclick="goHome()">← Zurück</button>
+      <button class="btn btn-secondary" style="border-color:var(--wrong);color:var(--wrong);"
+        onclick="if(confirm('Alle Ergebnisse löschen?')){clearHistory();goHome();}">🗑 Verlauf löschen</button>
+    </div>`;
+}
+
+function renderHistoryDetail() {
+  const h = state.historyItem;
+  if(!h) return renderHistory();
+
+  const d = new Date(h.date);
+  const ds = d.toLocaleDateString('de-AT',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  const modeLabels = { exam:'🎓 Prüfungssimulation', all:'📋 Übungstest', shuffle:'🔀 Zufälliger Test', review:'📚 Wiederholung' };
+
+  let summaryHTML = '';
+  if(h.mode === 'exam' && h.examResult) {
+    const r = h.examResult;
+    const color = r.passed ? 'var(--correct)' : 'var(--wrong)';
+    const topicKeys = r.cats || Object.keys(r.topicScores || {});
+    const topicRows = topicKeys.map(cat => {
+      const ts = r.topicScores && r.topicScores[cat];
+      if(!ts) return '';
+      const catPassed = ts.pct >= 0.5;
+      return `<div class="topic-score-row">
+        <span class="q-category ${getCatClass(cat)}" style="font-size:0.7rem;min-width:82px;">${cat}</span>
+        <div class="topic-score-bar-wrap">
+          <div class="topic-score-bar" style="width:${ts.pct*100}%;background:${catPassed?'var(--correct)':'var(--wrong)'}"></div>
+        </div>
+        <span style="color:${catPassed?'var(--correct)':'var(--wrong)'};font-weight:600;">${ts.score}/6 ${catPassed?'✓':'✗'}</span>
+      </div>`;
+    }).join('');
+    summaryHTML = `<div style="text-align:center;margin-bottom:12px;">
+      <div style="font-size:2rem;font-weight:700;color:${color};margin-bottom:4px;">${r.totalScore}/18 Punkte</div>
+      <div style="color:${color};font-weight:600;font-size:1.1rem;">${r.passed?'✓ Bestanden':'✗ Nicht bestanden'}</div>
+    </div>
+    <div class="topic-scores-section">${topicRows}</div>`;
+  } else {
+    const pct = Math.round(h.score / h.total * 100);
+    summaryHTML = `<div style="text-align:center;">
+      <div style="font-size:2rem;font-weight:700;margin-bottom:4px;">${h.score}/${h.total}</div>
+      <div style="color:var(--text-dim);">${pct}%</div>
+    </div>`;
+  }
+
+  const reviewItems = (h.answers || []).map(a => {
+    const q = h.questions && h.questions[a.qIdx];
+    if(!q) return '';
+    const correctOpts = q.ans.map(i => `<div class="review-answer correct-ans">✓ ${q.opts[i]}</div>`).join('');
+    const wrongOpts = (a.selected||[]).filter(s => !q.ans.includes(s)).map(s => `<div class="review-answer wrong-ans">✗ ${q.opts[s]}</div>`).join('');
+    const missedOpts = q.ans.filter(i => !(a.selected||[]).includes(i)).map(i => `<div class="review-answer missed-ans">↳ vergessen: ${q.opts[i]}</div>`).join('');
+    const borderColor = a.status==='correct'?'var(--correct)':a.status==='partial'?'var(--gold)':'var(--wrong)';
+    const statusIcon = a.status==='correct'?'✓':a.status==='partial'?'◐':'✗';
+    const statusColor = a.status==='correct'?'#4ade80':a.status==='partial'?'var(--gold)':'#f87171';
+    return `<div class="review-item" style="border-left:3px solid ${borderColor};padding-left:14px;">
+      <div class="review-q">
+        <span style="color:${statusColor};margin-right:6px;font-weight:700;">${statusIcon}</span>
+        <span class="q-category ${getCatClass(q.cat)}" style="margin-right:8px;font-size:0.7rem;">${q.cat}</span>${q.q}
+      </div>
+      ${correctOpts}${wrongOpts}${missedOpts}
+    </div>`;
+  }).join('');
+
+  return `
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <button class="btn btn-secondary" onclick="showHistory()" style="padding:8px 16px;">← Zurück</button>
+      <div>
+        <div style="font-weight:600;">${modeLabels[h.mode]||h.mode}</div>
+        <div style="font-size:0.82rem;color:var(--text-dim);">${ds}</div>
+      </div>
+    </div>
+    <div class="results-card" style="margin-bottom:20px;">${summaryHTML}</div>
+    <h3 style="font-family:'DM Serif Display',serif;margin:0 0 14px;font-size:1.2rem;">Alle Antworten (${(h.answers||[]).length}):</h3>
+    ${reviewItems}
+  `;
+}
+
+// ============================================================
+// EVENT HANDLERS
+// ============================================================
+function toggleCat(cat) {
+  if(state.mode === 'exam' || state.mode === 'review') state.mode = 'all';
+  const i = state.selectedCats.indexOf(cat);
+  if(i>-1) state.selectedCats.splice(i,1); else state.selectedCats.push(cat);
+  render();
+}
+function setMode(m) { state.mode = m; render(); }
+
+// INIT
+render();
+</script>
+
+<footer class="site-footer">
+  <div class="kaiserschmarrn-card">
+    <div class="kaiserschmarrn-emoji">🍽️</div>
+    <div class="kaiserschmarrn-title">Kauf mir einen Kaiserschmarrn!</div>
+    <div class="kaiserschmarrn-sub">
+      Dieses Tool ist kostenlos und werbefreigebaut von einem Menschen, der selbst für die Staatsbürgerschaft lernt.
+      Wenn's hilft – ein Kaiserschmarrn wäre nett. 🇦🇹
+    </div>
+    <div class="footer-links">
+      <a class="footer-link paypal" href="https://www.paypal.me/AGrek152" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.59 3.025-2.566 6.243-8.558 6.243H9.824l-1.35 8.56h3.51l.87-5.505h2.037c4.065 0 6.502-2.426 7.33-6.01z"/></svg>
+        PayPal spenden
+      </a>
+      <a class="footer-link linkedin" href="https://www.linkedin.com/in/aleksandr-grek-79137b1a8/" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+  <div class="footer-credits">
+    Fragen von <a href="https://staatsbuergerschaft.com/" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;">staatsbuergerschaft.com</a>
+    &nbsp;·&nbsp; Gebaut mit ❤️ in Wien
+  </div>
+</footer>
+</body>
+</html>
